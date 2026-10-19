@@ -1,0 +1,20 @@
+{
+  "name": "dedt-wp1-l3-collaboration",
+  "version": "0.1.0",
+  "description": "DeDT WP1: L3 distributed bridge for collaboration of digital twin teams on heterogeneous blockchains",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "coverage": "hardhat coverage",
+    "demo": "hardhat run scripts/demo.js",
+    "benchmark": "hardhat run scripts/benchmark.js",
+    "figures": "python analysis/make_figures.py"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.1.0",
+    "hardhat": "^2.26.0"
+  }
+}

@@ -6,6 +6,7 @@
 
 [![Website](https://img.shields.io/badge/website-smhbamakan.github.io%2FDeDT-1e40af)](https://smhbamakan.github.io/DeDT/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![WP1 contracts](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml/badge.svg)](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml)
 [![WP3 contracts](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp3-contracts.yml/badge.svg)](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp3-contracts.yml)
 ![MSCA](https://img.shields.io/badge/MSCA-Postdoctoral%20Fellowship-003399)
 ![Masaryk University](https://img.shields.io/badge/host-Masaryk%20University-0e9384)
@@ -29,7 +30,7 @@ flowchart TB
     end
 
     subgraph Chain["⛓️ Blockchain layer"]
-        WP1["<b>WP1 · DAO</b><br/>collaboration & governance"]
+        WP1["<b>WP1 · L3 collaboration</b><br/>cross-chain gateway · dNFT · HTLC"]
         WP3["<b>WP3 · IP-NFT</b><br/>provenance & fundraising"]
         WP4["<b>WP4 · Trust</b><br/>IBE · authentication · ZKP"]
     end
@@ -56,8 +57,8 @@ flowchart TB
 
 | Folder | Work package | Objective | Tech | Status |
 |---|---|---|---|---|
+| [`wp1-dao-collaboration/`](wp1-dao-collaboration/) | **WP1** · L3 collaboration across heterogeneous blockchains | O1, O2 | Solidity · Hardhat · Python | ✅ Prototype + tests + figures |
 | [`wp3-ip-nft-fundraising/`](wp3-ip-nft-fundraising/) | **WP3** · IP-NFTs & fundraising | O3 | Solidity · Hardhat | ✅ Prototype + tests |
-| [`wp1-dao-collaboration/`](wp1-dao-collaboration/) | **WP1** · Distributed collaboration (DAO) | O1, O2 | Solidity · Hardhat | 🔜 Step 2 |
 | [`wp2-big-data-flows/`](wp2-big-data-flows/) | **WP2** · Big data flows | O2 | Python | 🔜 Step 3 |
 | [`wp4-trust-auditing/`](wp4-trust-auditing/) | **WP4** · Trust & auditing | O4 | Python · Solidity | 🔜 Step 4 |
 | [`docs/`](docs/) | Documentation & tutorials | — | Markdown | 🔜 Step 5 |
@@ -70,7 +71,7 @@ Each folder is self-contained, with its own README, install steps and tests.
 timeline
     title Step-by-step build of the DeDT platform
     Step 1 : WP3 IP-NFT registry : NFT-backed crowdfunding : IP share tokens
-    Step 2 : WP1 DAO for twin teams : proposals & voting : data-sharing access control
+    Step 2 : WP1 L3 gateway (AEI 2025 paper) : dNFT sharing across chains : HTLC atomic swaps : DAO governance (next)
     Step 3 : WP2 sensor stream simulator : edge aggregation : Merkle anchoring on-chain
     Step 4 : WP4 identity-based encryption : self-judgment authentication : ZKP ownership proofs
     Step 5 : Integration demo : tutorials & docs
