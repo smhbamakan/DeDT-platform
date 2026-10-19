@@ -2,7 +2,7 @@
 
 ![Python tests](https://img.shields.io/badge/python%20tests-28%20passing-brightgreen)
 ![Solidity tests](https://img.shields.io/badge/solidity%20tests-18%20passing-brightgreen)
-![Coverage](https://img.shields.io/badge/line%20coverage-99%25-brightgreen)
+![Coverage](https://img.shields.io/badge/line%20coverage-100%25-brightgreen)
 ![Curve](https://img.shields.io/badge/curve-BN254%20(EVM%20native)-blue)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
