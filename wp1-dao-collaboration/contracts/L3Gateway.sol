@@ -18,6 +18,8 @@ import {IL3Receiver} from "./interfaces/IL3Receiver.sol";
 ///        not chosen by users, so they cannot collide or be front-run;
 ///      - IDs are bound to origin and destination domains, so a message cannot be replayed
 ///        on another chain, and each ID can be delivered only once;
+///      - attestations are bound to the destination chain ID and gateway address, so a signature
+///        collected for one gateway is useless on any other deployment (even with the same domain);
 ///      - delivery actually executes the message on the recipient contract;
 ///      - the validator set is rotated by a quorum of the current validators.
 contract L3Gateway {
@@ -31,7 +33,7 @@ contract L3Gateway {
         bytes payload;
     }
 
-    bytes32 public constant ATTESTATION_TAG = keccak256("DeDT-L3/attest/v1");
+    bytes32 public constant ATTESTATION_TAG = keccak256("DeDT-L3/attest/v2");
     bytes32 public constant VALSET_TAG = keccak256("DeDT-L3/validator-set/v1");
 
     uint32 public immutable localDomain;
@@ -111,9 +113,12 @@ contract L3Gateway {
         );
     }
 
-    /// @notice What validators sign (EIP-191 personal message) to attest a message.
-    function attestationDigest(bytes32 id) public pure returns (bytes32) {
-        return MessageHashUtils.toEthSignedMessageHash(keccak256(abi.encode(ATTESTATION_TAG, id)));
+    /// @notice What validators sign (EIP-191 personal message) to attest a message for delivery
+    ///         on *this* gateway: the digest binds the chain ID and the gateway address.
+    function attestationDigest(bytes32 id) public view returns (bytes32) {
+        return MessageHashUtils.toEthSignedMessageHash(
+            keccak256(abi.encode(ATTESTATION_TAG, block.chainid, address(this), id))
+        );
     }
 
     /// @notice What validators sign to approve a new validator set on this gateway.

@@ -17,6 +17,9 @@ import {L3Gateway} from "./L3Gateway.sol";
 ///   - Contribute: the remote team updates its mirror; the update is sent back and recorded in the
 ///                 native twin's history with the contributor's address and chain (Step 13).
 ///   - Sync / Revoke: the owner pushes its latest state to a mirror, or withdraws access.
+///   - Ordered channels: every message carries a sequence number per channel
+///                 (twin, partner chain, team, direction) and is applied strictly in order, so a
+///                 Revoke and a later re-Share can never take effect in the wrong order.
 ///
 /// @dev Only hashes and URIs are stored; the twin data itself stays off-chain.
 ///      The same contract is deployed on every chain and trusts its peers via `trustedRemote`.
@@ -35,6 +38,7 @@ contract DigitalTwinDNFT is ERC721, Ownable, IL3Receiver {
         address author;
         bytes32 stateHash;
         string uri;
+        uint64 seq; // position in its channel, see channelId
     }
 
     struct Twin {
@@ -65,6 +69,9 @@ contract DigitalTwinDNFT is ERC721, Ownable, IL3Receiver {
     mapping(uint256 => mapping(uint32 => mapping(address => bool))) public sharedWith;
     /// origin domain => origin tokenId => team => local mirror tokenId
     mapping(uint32 => mapping(uint256 => mapping(address => uint256))) public mirrorOf;
+    /// channel => sequence number of the next message to send / to accept
+    mapping(bytes32 => uint64) public nextOutSeq;
+    mapping(bytes32 => uint64) public nextInSeq;
 
     event TwinMinted(uint256 indexed tokenId, address indexed owner, bytes32 stateHash);
     event StateUpdated(uint256 indexed tokenId, uint64 version, bytes32 stateHash, address author, uint32 authorDomain);
@@ -72,6 +79,7 @@ contract DigitalTwinDNFT is ERC721, Ownable, IL3Receiver {
     event ShareRevoked(uint256 indexed tokenId, uint32 indexed destDomain, address indexed team);
     event MirrorCreated(uint256 indexed mirrorId, uint32 originDomain, uint256 originTokenId, address team);
     event TrustedRemoteSet(uint32 indexed domain, address remote);
+    event ContributionRejected(uint256 indexed tokenId, uint32 indexed fromDomain, address indexed team, uint64 seq);
 
     error NotAuthorized();
     error NotNative(uint256 tokenId);
@@ -82,6 +90,7 @@ contract DigitalTwinDNFT is ERC721, Ownable, IL3Receiver {
     error OnlyGateway();
     error UntrustedRemote(uint32 domain, address sender);
     error UnknownMirror();
+    error OutOfOrder(bytes32 channel, uint64 expected, uint64 received);
 
     constructor(L3Gateway gateway_) ERC721("DeDT Digital Twin dNFT", "DTWIN") Ownable(msg.sender) {
         gateway = gateway_;
@@ -151,7 +160,8 @@ contract DigitalTwinDNFT is ERC721, Ownable, IL3Receiver {
         if (t.revoked) revert MirrorRevoked(mirrorId);
         _applyState(mirrorId, stateHash, uri, msg.sender, localDomain);
 
-        TwinMsg memory m = TwinMsg(MsgKind.Contribute, t.originTokenId, msg.sender, msg.sender, stateHash, uri);
+        bytes32 ch = channelId(t.originDomain, t.originTokenId, localDomain, msg.sender, true);
+        TwinMsg memory m = TwinMsg(MsgKind.Contribute, t.originTokenId, msg.sender, msg.sender, stateHash, uri, nextOutSeq[ch]++);
         return gateway.dispatch(t.originDomain, trustedRemote[t.originDomain], abi.encode(m));
     }
 
@@ -161,21 +171,30 @@ contract DigitalTwinDNFT is ERC721, Ownable, IL3Receiver {
         if (msg.sender != address(gateway)) revert OnlyGateway();
         if (originDomain == 0 || sender != trustedRemote[originDomain]) revert UntrustedRemote(originDomain, sender);
         TwinMsg memory m = abi.decode(payload, (TwinMsg));
+        bool up = m.kind == MsgKind.Contribute;
+        bytes32 ch = up
+            ? channelId(localDomain, m.originTokenId, originDomain, m.team, true)
+            : channelId(originDomain, m.originTokenId, localDomain, m.team, false);
+        // An early message reverts and stays deliverable (the gateway lets it be relayed again).
+        if (m.seq != nextInSeq[ch]) revert OutOfOrder(ch, nextInSeq[ch], m.seq);
+        nextInSeq[ch] = m.seq + 1;
 
         if (m.kind == MsgKind.Share) {
             _receiveShare(originDomain, m);
-        } else if (m.kind == MsgKind.Contribute) {
-            if (!sharedWith[m.originTokenId][originDomain][m.team]) revert NotShared();
+        } else if (up) {
+            // Access was revoked while the contribution was in flight: consume it without effect,
+            // so that the channel is not blocked for later contributions after a re-share.
+            if (!sharedWith[m.originTokenId][originDomain][m.team]) {
+                emit ContributionRejected(m.originTokenId, originDomain, m.team, m.seq);
+                return;
+            }
             _applyState(m.originTokenId, m.stateHash, m.uri, m.author, originDomain);
         } else {
             uint256 mirrorId = mirrorOf[originDomain][m.originTokenId][m.team];
             if (mirrorId == 0) revert UnknownMirror();
-            if (m.kind == MsgKind.Revoke) {
-                _twins[mirrorId].revoked = true;
-            } else {
-                if (_twins[mirrorId].revoked) revert MirrorRevoked(mirrorId);
-                _applyState(mirrorId, m.stateHash, m.uri, m.author, originDomain);
-            }
+            // In-order delivery guarantees a Sync never follows a Revoke without a re-Share between them.
+            if (m.kind == MsgKind.Revoke) _twins[mirrorId].revoked = true;
+            else _applyState(mirrorId, m.stateHash, m.uri, m.author, originDomain);
         }
     }
 
@@ -192,6 +211,16 @@ contract DigitalTwinDNFT is ERC721, Ownable, IL3Receiver {
 
     function revisionAt(uint256 tokenId, uint256 index) external view returns (Revision memory) {
         return _history[tokenId][index];
+    }
+
+    /// @notice Identifier of the channel between a native twin and one team on a mirror chain.
+    /// @param up true for mirror → native (Contribute), false for native → mirror (Share, Sync, Revoke).
+    function channelId(uint32 nativeDomain, uint256 nativeTokenId, uint32 mirrorDomain, address team, bool up)
+        public
+        pure
+        returns (bytes32)
+    {
+        return keccak256(abi.encode(nativeDomain, nativeTokenId, mirrorDomain, team, up));
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
@@ -219,7 +248,8 @@ contract DigitalTwinDNFT is ERC721, Ownable, IL3Receiver {
 
     function _send(uint32 destDomain, MsgKind kind, uint256 tokenId, address team) private returns (bytes32) {
         Twin storage t = _twins[tokenId];
-        TwinMsg memory m = TwinMsg(kind, tokenId, team, msg.sender, t.stateHash, t.uri);
+        bytes32 ch = channelId(localDomain, tokenId, destDomain, team, false);
+        TwinMsg memory m = TwinMsg(kind, tokenId, team, msg.sender, t.stateHash, t.uri, nextOutSeq[ch]++);
         return gateway.dispatch(destDomain, trustedRemote[destDomain], abi.encode(m));
     }
 

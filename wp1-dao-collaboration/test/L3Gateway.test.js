@@ -33,7 +33,7 @@ describe("L3Gateway", function () {
   describe("deliver (Algorithm 4)", function () {
     it("executes the message when a quorum of validators attests it", async function () {
       const { gatewayB, receiver, validators, relayer, uts, id } = await loadFixture(dispatched);
-      const sigs = await attest(id, validators.slice(0, THRESHOLD));
+      const sigs = await attest(id, validators.slice(0, THRESHOLD), gatewayB);
       await expect(gatewayB.connect(relayer).deliver(uts, sigs))
         .to.emit(gatewayB, "MessageDelivered")
         .withArgs(id, DOMAIN_A, await receiver.getAddress(), relayer.address);
@@ -44,20 +44,20 @@ describe("L3Gateway", function () {
 
     it("prevents replay of a delivered message", async function () {
       const { gatewayB, validators, uts, id } = await loadFixture(dispatched);
-      const sigs = await attest(id, validators.slice(0, THRESHOLD));
+      const sigs = await attest(id, validators.slice(0, THRESHOLD), gatewayB);
       await gatewayB.deliver(uts, sigs);
       await expect(gatewayB.deliver(uts, sigs)).to.be.revertedWithCustomError(gatewayB, "AlreadyDelivered").withArgs(id);
     });
 
     it("rejects delivery on the wrong chain", async function () {
-      const { gatewayA, validators, uts, id } = await loadFixture(dispatched);
-      const sigs = await attest(id, validators.slice(0, THRESHOLD));
+      const { gatewayA, gatewayB, validators, uts, id } = await loadFixture(dispatched);
+      const sigs = await attest(id, validators.slice(0, THRESHOLD), gatewayB);
       await expect(gatewayA.deliver(uts, sigs)).to.be.revertedWithCustomError(gatewayA, "WrongDomain");
     });
 
     it("requires a quorum", async function () {
       const { gatewayB, validators, uts, id } = await loadFixture(dispatched);
-      const sigs = await attest(id, validators.slice(0, THRESHOLD - 1));
+      const sigs = await attest(id, validators.slice(0, THRESHOLD - 1), gatewayB);
       await expect(gatewayB.deliver(uts, sigs))
         .to.be.revertedWithCustomError(gatewayB, "InsufficientSignatures")
         .withArgs(THRESHOLD - 1, THRESHOLD);
@@ -65,23 +65,34 @@ describe("L3Gateway", function () {
 
     it("rejects duplicate, unsorted or unknown signers", async function () {
       const { gatewayB, validators, uts, id } = await loadFixture(dispatched);
-      const sigs = await attest(id, validators.slice(0, THRESHOLD));
+      const sigs = await attest(id, validators.slice(0, THRESHOLD), gatewayB);
       await expect(gatewayB.deliver(uts, [sigs[0], sigs[0], sigs[1]])).to.be.revertedWithCustomError(gatewayB, "UnsortedOrDuplicateSigner");
       await expect(gatewayB.deliver(uts, [...sigs].reverse())).to.be.revertedWithCustomError(gatewayB, "UnsortedOrDuplicateSigner");
 
       const intruders = Array.from({ length: THRESHOLD }, () => ethers.Wallet.createRandom());
-      await expect(gatewayB.deliver(uts, await attest(id, intruders))).to.be.revertedWithCustomError(gatewayB, "UnknownValidator");
+      await expect(gatewayB.deliver(uts, await attest(id, intruders, gatewayB))).to.be.revertedWithCustomError(gatewayB, "UnknownValidator");
     });
 
     it("rejects a tampered payload", async function () {
       const { gatewayB, validators, uts, id } = await loadFixture(dispatched);
-      const sigs = await attest(id, validators.slice(0, THRESHOLD));
+      const sigs = await attest(id, validators.slice(0, THRESHOLD), gatewayB);
       await expect(gatewayB.deliver({ ...uts, payload: "0xdeadbeef" }, sigs)).to.be.revertedWithCustomError(gatewayB, "UnknownValidator");
+    });
+
+    it("binds attestations to the destination gateway (no reuse on another deployment)", async function () {
+      const { gatewayB, validators, uts, id } = await loadFixture(dispatched);
+      // a second gateway with the same domain number and the same validators
+      const twin = await ethers.deployContract("L3Gateway", [DOMAIN_B, validators.map((v) => v.address), THRESHOLD]);
+      const sigsForB = await attest(id, validators.slice(0, THRESHOLD), gatewayB);
+      await expect(twin.deliver(uts, sigsForB)).to.be.revertedWithCustomError(twin, "UnknownValidator");
+      await twin.deliver(uts, await attest(id, validators.slice(0, THRESHOLD), twin));
+      expect(await twin.delivered(id)).to.equal(true);
+      expect(await gatewayB.delivered(id)).to.equal(false);
     });
 
     it("can be retried if the recipient reverts", async function () {
       const { gatewayB, receiver, validators, uts, id } = await loadFixture(dispatched);
-      const sigs = await attest(id, validators.slice(0, THRESHOLD));
+      const sigs = await attest(id, validators.slice(0, THRESHOLD), gatewayB);
       await receiver.setFail(true);
       await expect(gatewayB.deliver(uts, sigs)).to.be.revertedWith("receiver failed");
       expect(await gatewayB.delivered(id)).to.equal(false);

@@ -11,12 +11,18 @@ function utsFromEvent(originDomain, ev) {
   return { originDomain, destDomain, nonce, sender, recipient, payload };
 }
 
-/** Each validator signs the gateway's attestation digest (EIP-191) for a message ID. */
-async function attest(id, validators) {
+/**
+ * Each validator signs the destination gateway's attestation digest (EIP-191) for a message ID.
+ * The digest binds the destination chain ID and gateway address, so the signatures are valid
+ * only on `dest` (an ethers Contract of the destination L3Gateway).
+ */
+async function attest(id, validators, dest) {
+  const provider = dest.runner.provider ?? dest.runner;
+  const { chainId } = await provider.getNetwork();
   const inner = ethers.keccak256(
     ethers.AbiCoder.defaultAbiCoder().encode(
-      ["bytes32", "bytes32"],
-      [ethers.keccak256(ethers.toUtf8Bytes("DeDT-L3/attest/v1")), id]
+      ["bytes32", "uint256", "address", "bytes32"],
+      [ethers.keccak256(ethers.toUtf8Bytes("DeDT-L3/attest/v2")), chainId, await dest.getAddress(), id]
     )
   );
   const sigs = await Promise.all(
@@ -44,7 +50,7 @@ async function relayPending({ source, dest, validators, relayer, fromBlock = 0 }
   for (const ev of events) {
     const id = ev.args.id;
     if (await dest.delivered(id)) continue;
-    const signatures = await attest(id, validators.slice(0, threshold));
+    const signatures = await attest(id, validators.slice(0, threshold), dest);
     const tx = await dest.connect(relayer).deliver(utsFromEvent(originDomain, ev), signatures);
     await tx.wait();
     deliveredIds.push(id);

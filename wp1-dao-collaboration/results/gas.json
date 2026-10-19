@@ -1,50 +1,50 @@
 {
-  "generatedAt": "2026-10-19T10:54:41.467Z",
+  "generatedAt": "2026-10-19T15:56:33.352Z",
   "deliver": [
     {
       "validators": 1,
       "threshold": 1,
-      "gas": 134383
+      "gas": 134438
     },
     {
       "validators": 4,
       "threshold": 3,
-      "gas": 150246
+      "gas": 150278
     },
     {
       "validators": 7,
       "threshold": 5,
-      "gas": 166146
+      "gas": 166190
     },
     {
       "validators": 10,
       "threshold": 7,
-      "gas": 182035
+      "gas": 182090
     },
     {
       "validators": 13,
       "threshold": 9,
-      "gas": 197935
+      "gas": 197979
     },
     {
       "validators": 16,
       "threshold": 11,
-      "gas": 213800
+      "gas": 213844
     },
     {
       "validators": 19,
       "threshold": 13,
-      "gas": 229678
+      "gas": 229722
     },
     {
       "validators": 22,
       "threshold": 15,
-      "gas": 245592
+      "gas": 245647
     },
     {
       "validators": 25,
       "threshold": 17,
-      "gas": 261458
+      "gas": 261526
     }
   ],
   "dispatch": [
@@ -54,7 +54,7 @@
     },
     {
       "bytes": 256,
-      "gas": 37933
+      "gas": 37909
     },
     {
       "bytes": 1024,
@@ -62,17 +62,17 @@
     },
     {
       "bytes": 4096,
-      "gas": 185920
+      "gas": 185890
     }
   ],
   "workflow": {
     "Mint twin dNFT": 213173,
-    "Update state": 88134,
-    "Share (chain A)": 92339,
-    "Deliver share (chain B)": 322430,
-    "Contribute (chain B)": 127775,
-    "Deliver contribution (chain A)": 151384,
-    "HTLC lock dNFT": 221253,
-    "HTLC claim": 80822
+    "Update state": 88178,
+    "Share (chain A)": 115601,
+    "Deliver share (chain B)": 345778,
+    "Contribute (chain B)": 151300,
+    "Deliver contribution (chain A)": 174702,
+    "HTLC lock dNFT": 221231,
+    "HTLC claim": 80800
   }
 }

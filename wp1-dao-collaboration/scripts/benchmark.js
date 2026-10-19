@@ -19,7 +19,7 @@ async function deliverGas(n) {
   const receiver = await ethers.deployContract("MockReceiver");
   const tx = await a.connect(sender).dispatch(2, await receiver.getAddress(), ethers.hexlify(ethers.randomBytes(32)));
   const ev = (await a.queryFilter(a.filters.MessageDispatched(), tx.blockNumber))[0];
-  const sigs = await attest(ev.args.id, validators.slice(0, t));
+  const sigs = await attest(ev.args.id, validators.slice(0, t), b);
   const receipt = await (await b.deliver(utsFromEvent(1, ev), sigs)).wait();
   return { validators: n, threshold: t, gas: Number(receipt.gasUsed) };
 }
@@ -45,7 +45,7 @@ async function workflowGas() {
   const relay = async (src, dst, origin) => {
     const evs = await src.queryFilter(src.filters.MessageDispatched());
     const ev = evs[evs.length - 1];
-    return gas(dst.deliver(utsFromEvent(origin, ev), await attest(ev.args.id, validators.slice(0, 3))));
+    return gas(dst.deliver(utsFromEvent(origin, ev), await attest(ev.args.id, validators.slice(0, 3), dst)));
   };
 
   const out = {};

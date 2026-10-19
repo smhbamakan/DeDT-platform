@@ -16,7 +16,7 @@ async function relay(source, dest, validators, relayer) {
   const events = await source.queryFilter(source.filters.MessageDispatched(null, await dest.localDomain()));
   for (const ev of events) {
     if (await dest.delivered(ev.args.id)) continue;
-    const sigs = await attest(ev.args.id, validators.slice(0, threshold));
+    const sigs = await attest(ev.args.id, validators.slice(0, threshold), dest);
     console.log(`           ${threshold}/${validators.length} validators attest ${short(ev.args.id)}; relayer delivers it`);
     const receipt = await (await dest.connect(relayer).deliver(utsFromEvent(origin, ev), sigs)).wait();
     console.log(`           delivered on domain ${await dest.localDomain()} (gas ${receipt.gasUsed})`);

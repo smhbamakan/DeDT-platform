@@ -7,7 +7,7 @@
 [![WP1 contracts](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml/badge.svg)](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml)
 ![Solidity](https://img.shields.io/badge/Solidity-0.8.28-363636?logo=solidity)
 ![Hardhat](https://img.shields.io/badge/Hardhat-2.x-f0d50c?logo=ethereum&logoColor=black)
-![Tests](https://img.shields.io/badge/tests-53%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-55%20passing-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-99%25-brightgreen)
 ![Objectives](https://img.shields.io/badge/objectives-O1%20%C2%B7%20O2-1e40af)
 
@@ -282,6 +282,15 @@ The paper's `L3Network` contract shows the idea, but it reintroduces the central
 | 7 | Fixed admin forever | No way to change who validates | **Validator rotation** signed by a quorum of the current set; old approvals cannot be replayed |
 | 8 | Failure handling not specified | A failed delivery could be lost | If the recipient reverts, nothing is marked delivered and the message **can be relayed again** |
 
+### 🔒 Hardening beyond the paper (found during the D1.3 security analysis)
+
+| # | Risk | Fix | Test |
+|---|---|---|---|
+| R1 | Attestations covered only the domains, so two gateways deployed with the same domain number and validators would accept each other's signatures | The attestation digest binds the **destination chain ID and gateway address** (`DeDT-L3/attest/v2`) | *binds attestations to the destination gateway* |
+| R2 | The gateway does not order messages, so a *Revoke* and a later re-*Share* delivered in reverse order left the mirror revoked while the origin considered it shared | **Ordered channels**: each message carries a sequence number per (twin, partner chain, team, direction); an early message reverts and stays deliverable. A contribution that arrives after a revoke is consumed with a `ContributionRejected` event, so it never blocks the channel | *applies messages of a channel strictly in order*; *rejects a contribution … without blocking the channel* |
+
+The first message on a channel stores its sequence counter (≈ 23k gas on each side); later messages on the same channel update it for ≈ 5k.
+
 ---
 
 ## 📊 Results
@@ -310,12 +319,12 @@ Delivery cost is **≈ 126k + 7.9k × signatures**. Adding validators makes the 
 | 22 | 15 | 245,592 |
 | 25 | 17 | 261,458 |
 
-Dispatch cost by payload size: 32 B → 32,429 · 256 B → 37,933 · 1 KB → 63,400 · 4 KB → 185,920 gas. This is why only hashes and URIs of twin data go through the bridge.
+Dispatch cost by payload size: 32 B → 32,429 · 256 B → 37,909 · 1 KB → 63,400 · 4 KB → 185,890 gas. This is why only hashes and URIs of twin data go through the bridge.
 </details>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/figures/workflow-gas-dark.png">
-  <img alt="Bar chart of gas per workflow step: mint 213k, update 88k, share 92k, deliver share 322k, contribute 128k, deliver contribution 151k, HTLC lock 221k, HTLC claim 81k." src="docs/figures/workflow-gas-light.png" width="720">
+  <img alt="Bar chart of gas per workflow step: mint 213k, update 88k, share 116k, deliver share 346k, contribute 151k, deliver contribution 175k, HTLC lock 221k, HTLC claim 81k." src="docs/figures/workflow-gas-light.png" width="720">
 </picture>
 
 <details>
@@ -324,13 +333,13 @@ Dispatch cost by payload size: 32 B → 32,429 · 256 B → 37,933 · 1 KB → 6
 | Step | Gas |
 |---|---:|
 | Mint twin dNFT | 213,173 |
-| Update state | 88,134 |
-| Share (chain A) | 92,339 |
-| Deliver share (chain B, creates the mirror) | 322,430 |
-| Contribute (chain B) | 127,775 |
-| Deliver contribution (chain A) | 151,384 |
-| HTLC lock dNFT | 221,253 |
-| HTLC claim | 80,822 |
+| Update state | 88,178 |
+| Share (chain A) | 115,601 |
+| Deliver share (chain B, creates the mirror) | 345,778 |
+| Contribute (chain B) | 151,300 |
+| Deliver contribution (chain A) | 174,702 |
+| HTLC lock dNFT | 221,231 |
+| HTLC claim | 80,800 |
 </details>
 
 ### From the paper's evaluation (values transcribed, simulated in the paper)
@@ -368,7 +377,7 @@ Dispatch cost by payload size: 32 B → 32,429 · 256 B → 37,933 · 1 KB → 6
 ```bash
 cd wp1-dao-collaboration
 npm install
-npm test             # 53 tests
+npm test             # 55 tests
 npm run demo         # the paper's 13 steps, end to end (D1.3)
 npm run dao-demo     # the DAO workspace scenario (D1.2) → results/dao.json
 npm run benchmark    # gas measurements → results/gas.json
@@ -403,13 +412,13 @@ python -m venv .venv && .venv/bin/pip install matplotlib numpy   # Windows: .ven
 [Step 11] Algorithm 4: validators verify and sign it
 [Step 12] Relayer submits it to blockchain B
            3/5 validators attest 0x836af4ed…; relayer delivers it
-           delivered on domain 2002 (gas 322502)
+           delivered on domain 2002 (gas 345850)
            team #2 now holds mirror dNFT #1 on B
 
 ━━ Phase 3 · Data using ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Step 13] Team #2 modifies the shared twin; the change flows back to A
            3/5 validators attest 0xaac8ef82…; relayer delivers it
-           delivered on domain 1001 (gas 151420)
+           delivered on domain 1001 (gas 174714)
 
   Provenance of twin #1 on blockchain A:
 ┌─────────┬─────────┬───────────┬───────┬───────────────┐
@@ -451,6 +460,7 @@ python -m venv .venv && .venv/bin/pip install matplotlib numpy   # Windows: .ven
 | `syncTwin` · `revokeShare` | owner | Push the latest state / withdraw access |
 | `contribute(mirrorId, stateHash, uri)` | mirror holder | Updates the mirror and sends the change to the origin (Step 13) |
 | `twin(id)` · `historyLength(id)` · `revisionAt(id, i)` | view | State and provenance (author + chain of every revision) |
+| `channelId(nativeDomain, tokenId, mirrorDomain, team, up)` · `nextOutSeq(ch)` · `nextInSeq(ch)` | view | Ordered channels: next sequence number to send / to accept |
 
 Mirrors are **non-transferable**: access was granted to one specific team.
 </details>
@@ -472,6 +482,7 @@ Mirrors are **non-transferable**: access was granted to one specific team.
 
 - **Trust assumption:** a message is accepted only if at least `threshold` of the `n` validators sign it. With `threshold = ⌊2n/3⌋ + 1`, the bridge tolerates up to ⌊(n−1)/3⌋ faulty or malicious validators.
 - **Liveness:** relaying is permissionless, so anyone can deliver an attested message. Validators that go offline only delay delivery.
+- **Binding and order:** signatures are valid only on the gateway they were collected for (chain ID + address), and twin messages are applied in order per channel (R1, R2 above).
 - **Privacy:** only hashes and URIs cross the bridge. Zero-knowledge ownership proofs (paper §3.6.1) are planned in WP4.
 - **Two domains, one EVM:** tests and the demo simulate chains A and B as two gateways on one local network with different domain IDs. `lib/l3.js` takes ordinary ethers contracts, so the same code can relay between two real RPC endpoints.
 - **DAO:** reputation is earned, so founding members start with more of it. The voting cap limits any single member to 40 % of the vote, and the DAO can rebalance reputation by vote (`grantReputation`, `expelMember`). The L3 validator set is rotated by the validators themselves, not by the DAO, so a captured DAO cannot take over the bridge.
