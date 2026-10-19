@@ -117,6 +117,37 @@ describe("TwinTeamDAO (governance end to end)", function () {
     expect(await d.governor.state(id)).to.equal(2); // Canceled
   });
 
+  it("caps a single member's voting weight at 40% of total reputation", async function () {
+    const d = await loadFixture(dao);
+    expect(await d.governor.maxVoteShareBps()).to.equal(4000);
+    // lead holds 100 of 200 reputation (50%) but votes with at most 80 (40%)
+    const r = await runProposal(d, d.lead, [await action(d.workspace, "grantReputation", [d.lead.address, 1])], "Reward the lead", [
+      { signer: d.lead, support: FOR },
+    ]);
+    expect(r.tally.for).to.equal(80);
+    // alice (60) + bob (40) together outvote the capped lead
+    const r2 = await runProposal(d, d.lead, [await action(d.workspace, "grantReputation", [d.lead.address, 50])], "Reward the lead again", [
+      { signer: d.lead, support: FOR },
+      { signer: d.alice, support: AGAINST },
+      { signer: d.bob, support: AGAINST },
+    ]);
+    expect(r2.state).to.equal("Defeated");
+  });
+
+  it("changes the voting cap only by vote, within bounds", async function () {
+    const d = await loadFixture(dao);
+    await expect(d.governor.setMaxVoteShare(5000)).to.be.revertedWithCustomError(d.governor, "GovernorOnlyExecutor");
+    await runProposal(d, d.alice, [await action(d.governor, "setMaxVoteShare", [0])], "Remove the voting cap", [
+      { signer: d.lead, support: FOR },
+      { signer: d.alice, support: FOR },
+    ]);
+    expect(await d.governor.maxVoteShareBps()).to.equal(0);
+    const Governor = await ethers.getContractFactory("TwinTeamGovernor");
+    const args = [await d.reputation.getAddress(), await d.timelock.getAddress(), 1, 20, 10, 20];
+    await expect(Governor.deploy(...args, 500)).to.be.revertedWithCustomError(Governor, "InvalidVoteShare");
+    await expect(Governor.deploy(...args, 10001)).to.be.revertedWithCustomError(Governor, "InvalidVoteShare");
+  });
+
   it("decides by vote which blockchains the twins can connect to (L3 link)", async function () {
     const d = await loadFixture(dao);
     const gateway = await ethers.deployContract("L3Gateway", [1001, [ethers.Wallet.createRandom().address], 1]);

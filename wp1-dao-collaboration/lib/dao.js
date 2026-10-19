@@ -8,6 +8,7 @@ const DEFAULTS = {
   votingPeriod: 20, // blocks
   proposalThreshold: 10, // reputation points needed to propose
   quorumPercent: 20, // % of total reputation that must vote (for + abstain)
+  maxVoteShareBps: 4000, // no member's vote counts for more than 40% of total reputation (0 = no cap)
   minDelay: 3600, // timelock, seconds
   reportBond: ethers.parseEther("0.1"),
   reportReward: 10, // reputation for an upheld report
@@ -32,6 +33,7 @@ async function deployDAO(founders, overrides = {}) {
     config.votingPeriod,
     config.proposalThreshold,
     config.quorumPercent,
+    config.maxVoteShareBps,
   ]);
   const workspace = await ethers.deployContract("TwinWorkspace", [
     await reputation.getAddress(),

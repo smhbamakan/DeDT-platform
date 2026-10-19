@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-19T11:11:22.090Z",
+  "generatedAt": "2026-10-19T14:31:45.068Z",
   "proposals": [
     {
       "title": "Admit Carol, open the robot-arm project, fund two tasks",
       "state": "Executed",
-      "for": 200,
+      "for": 180,
       "against": 0,
       "abstain": 0,
       "gas": {
         "votes": [
-          83344,
-          66244,
-          66244
+          94083,
+          76967,
+          76967
         ],
-        "propose": 99539,
-        "queue": 181909,
-        "execute": 625196
+        "propose": 110242,
+        "queue": 181932,
+        "execute": 625241
       }
     },
     {
@@ -26,38 +26,38 @@
       "abstain": 0,
       "gas": {
         "votes": [
-          83344,
-          66244,
-          66244,
-          83300
+          94692,
+          77592,
+          77592,
+          94648
         ],
-        "propose": 76930,
-        "queue": 148457,
-        "execute": 267486
+        "propose": 88258,
+        "queue": 148480,
+        "execute": 267531
       }
     },
     {
       "title": "Connect the twin dNFT to chain 2002",
       "state": "Executed",
-      "for": 150,
+      "for": 148,
       "against": 0,
       "abstain": 0,
       "gas": {
         "votes": [
-          83344,
-          68593
+          94708,
+          79941
         ],
-        "propose": 78967,
-        "queue": 148254,
-        "execute": 116380
+        "propose": 90294,
+        "queue": 148277,
+        "execute": 116425
       }
     }
   ],
   "actions": {
-    "Propose": 99539,
-    "Cast vote": 71944,
-    "Queue (timelock)": 181909,
-    "Execute (4 actions)": 625196,
+    "Propose": 110242,
+    "Cast vote": 82672,
+    "Queue (timelock)": 181932,
+    "Execute (4 actions)": 625241,
     "Claim task": 58405,
     "Submit result": 55508,
     "Approve task (pays bounty)": 148586,

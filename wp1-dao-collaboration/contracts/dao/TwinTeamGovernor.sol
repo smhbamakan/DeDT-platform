@@ -14,6 +14,10 @@ import {IVotes} from "@openzeppelin/contracts/governance/utils/IVotes.sol";
 /// @notice Governance of the twin teams' DAO (WP1, D1.2). Members propose and vote with their
 ///         reputation (for / against / abstain); accepted proposals are queued in a timelock and
 ///         then executed on the workspace, the dNFT bridge configuration or the treasury.
+///
+///         Optional voting cap: no member's vote counts for more than `maxVoteShareBps` of the
+///         total reputation at the snapshot. This limits the weight of founding members, who start
+///         with the most reputation, until the DAO rebalances reputation by vote.
 contract TwinTeamGovernor is
     Governor,
     GovernorSettings,
@@ -22,24 +26,63 @@ contract TwinTeamGovernor is
     GovernorVotesQuorumFraction,
     GovernorTimelockControl
 {
-    /// @param votingDelay_   blocks between proposing and the start of voting
-    /// @param votingPeriod_  blocks during which votes are accepted
-    /// @param threshold_     reputation needed to submit a proposal
-    /// @param quorumPercent_ share of total reputation that must take part (for + abstain)
+    uint256 public constant MIN_VOTE_SHARE_BPS = 1000; // 10 %
+    uint256 public constant BPS = 10_000;
+
+    /// @notice Cap on one member's voting weight, in basis points of total reputation (0 = no cap).
+    uint256 public maxVoteShareBps;
+
+    event MaxVoteShareSet(uint256 oldBps, uint256 newBps);
+
+    error InvalidVoteShare(uint256 bps);
+
+    /// @param votingDelay_     blocks between proposing and the start of voting
+    /// @param votingPeriod_    blocks during which votes are accepted
+    /// @param threshold_       reputation needed to submit a proposal
+    /// @param quorumPercent_   share of total reputation that must take part (for + abstain)
+    /// @param maxVoteShareBps_ cap on one member's voting weight (basis points; 0 = no cap)
     constructor(
         IVotes reputation,
         TimelockController timelock,
         uint48 votingDelay_,
         uint32 votingPeriod_,
         uint256 threshold_,
-        uint256 quorumPercent_
+        uint256 quorumPercent_,
+        uint256 maxVoteShareBps_
     )
         Governor("DeDT Twin Teams DAO")
         GovernorSettings(votingDelay_, votingPeriod_, threshold_)
         GovernorVotes(reputation)
         GovernorVotesQuorumFraction(quorumPercent_)
         GovernorTimelockControl(timelock)
-    {}
+    {
+        _setMaxVoteShare(maxVoteShareBps_);
+    }
+
+    /// @notice Change the voting cap. Only through a proposal executed by the timelock.
+    function setMaxVoteShare(uint256 bps) external onlyGovernance {
+        _setMaxVoteShare(bps);
+    }
+
+    /// @dev Votes are read at the proposal snapshot and capped relative to the total reputation
+    ///      at that same snapshot, so the cap cannot be gamed by minting after a proposal starts.
+    function _getVotes(address account, uint256 timepoint, bytes memory params)
+        internal
+        view
+        override(Governor, GovernorVotes)
+        returns (uint256)
+    {
+        uint256 votes = super._getVotes(account, timepoint, params);
+        if (maxVoteShareBps == 0) return votes;
+        uint256 cap = (token().getPastTotalSupply(timepoint) * maxVoteShareBps) / BPS;
+        return votes < cap ? votes : cap;
+    }
+
+    function _setMaxVoteShare(uint256 bps) private {
+        if (bps != 0 && (bps < MIN_VOTE_SHARE_BPS || bps > BPS)) revert InvalidVoteShare(bps);
+        emit MaxVoteShareSet(maxVoteShareBps, bps);
+        maxVoteShareBps = bps;
+    }
 
     // Solidity requires these overrides to resolve the multiple inheritance.
 

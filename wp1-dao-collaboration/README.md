@@ -7,7 +7,7 @@
 [![WP1 contracts](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml/badge.svg)](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml)
 ![Solidity](https://img.shields.io/badge/Solidity-0.8.28-363636?logo=solidity)
 ![Hardhat](https://img.shields.io/badge/Hardhat-2.x-f0d50c?logo=ethereum&logoColor=black)
-![Tests](https://img.shields.io/badge/tests-51%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-53%20passing-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-99%25-brightgreen)
 ![Objectives](https://img.shields.io/badge/objectives-O1%20%C2%B7%20O2-1e40af)
 
@@ -114,7 +114,7 @@ The proposal's answer to WP1 is a **DAO that gives twin teams a common virtual w
 | Contract | Role |
 |---|---|
 | [`DTReputation.sol`](contracts/dao/DTReputation.sol) | **Non-transferable reputation = voting power.** Earned by contributing, lost when misbehaviour is upheld; it cannot be bought or moved. Whole points; holders are self-delegated automatically. |
-| [`TwinTeamGovernor.sol`](contracts/dao/TwinTeamGovernor.sol) | **Proposals and voting** (for / against / abstain), proposal threshold, quorum as a share of total reputation. |
+| [`TwinTeamGovernor.sol`](contracts/dao/TwinTeamGovernor.sol) | **Proposals and voting** (for / against / abstain), proposal threshold, quorum as a share of total reputation, and a **voting cap**: no member's vote counts for more than 40 % of total reputation (changeable by vote). |
 | `TimelockController` (OpenZeppelin) | **Delay before execution**, so members can react to a decision before it takes effect. It owns the workspace and the dNFT bridge configuration. |
 | [`TwinWorkspace.sol`](contracts/dao/TwinWorkspace.sol) | **The workspace:** membership, twin projects, funded tasks run in parallel, computational experiments with endorsements, bonded misbehaviour reports, and the treasury. |
 
@@ -206,12 +206,12 @@ Three founding teams run the workspace together, and a fourth team joins by vote
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/figures/dao-votes-dark.png">
-  <img alt="Stacked bars of votes for three proposals, all executed: 200 for 0 against; 215 for 40 against; 150 for 0 against." src="docs/figures/dao-votes-light.png" width="720">
+  <img alt="Stacked bars of votes for three proposals, all executed: 180 for 0 against; 215 for 40 against; 148 for 0 against." src="docs/figures/dao-votes-light.png" width="720">
 </picture>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/figures/dao-gas-dark.png">
-  <img alt="Gas per DAO action: propose 100k, vote 72k, queue 182k, execute a 4-action proposal 625k, claim 58k, submit 56k, approve 149k, experiment 151k, endorse 84k, report 171k." src="docs/figures/dao-gas-light.png" width="720">
+  <img alt="Gas per DAO action: propose 110k, vote 83k, queue 182k, execute a 4-action proposal 625k, claim 58k, submit 56k, approve 149k, experiment 151k, endorse 84k, report 171k." src="docs/figures/dao-gas-light.png" width="720">
 </picture>
 
 <details>
@@ -226,22 +226,24 @@ Three founding teams run the workspace together, and a fourth team joins by vote
 
 | Proposal | For | Against | Result |
 |---|---:|---:|---|
-| Admit Carol, open the robot-arm project, fund two tasks | 200 | 0 | Executed |
+| Admit Carol, open the robot-arm project, fund two tasks | 180 ¹ | 0 | Executed |
 | Uphold report #0 and slash Bob by 20 reputation | 215 | 40 | Executed |
-| Connect the twin dNFT to chain 2002 | 150 | 0 | Executed |
+| Connect the twin dNFT to chain 2002 | 148 ¹ | 0 | Executed |
 
 | Action | Gas |
 |---|---:|
-| Propose | 99,539 |
-| Cast vote (average) | 71,944 |
-| Queue in timelock | 181,909 |
-| Execute (4 actions) | 625,196 |
+| Propose | 110,242 |
+| Cast vote (average) | 82,672 |
+| Queue in timelock | 181,932 |
+| Execute (4 actions) | 625,241 |
 | Claim task | 58,405 |
 | Submit result | 55,508 |
 | Approve task (pays bounty, mints reputation) | 148,586 |
 | Submit experiment | 150,567 |
 | Endorse experiment | 84,476 |
 | File report (bonded) | 170,672 |
+
+¹ The lead holds 50 % of the reputation but votes with at most 40 % of the total because of the voting cap.
 </details>
 
 ### Governance parameters (defaults in [`lib/dao.js`](lib/dao.js))
@@ -252,7 +254,15 @@ Three founding teams run the workspace together, and a fourth team joins by vote
 | Voting period | 20 blocks | Short for the demo; use about one week of blocks in production |
 | Proposal threshold | 10 reputation | Minimum reputation to submit a proposal |
 | Quorum | 20 % | Share of total reputation that must vote *for* or *abstain* |
+| Voting cap | 40 % | Maximum weight of one member's vote; `setMaxVoteShare` by vote (0 = no cap) |
 | Timelock delay | 1 hour | Short for the demo; use 1–2 days in production |
+
+Production values (≈ 1 day delay, ≈ 1 week voting, 2-day timelock, 40 % cap) are the defaults of [`scripts/deploy-dao.js`](scripts/deploy-dao.js), which also checks after deployment that the deployer kept no rights:
+
+```bash
+npm run deploy:dao            # dry run on the in-memory network
+npm run deploy:dao:sepolia    # public test network; set FOUNDERS and keys in .env (see .env.example)
+```
 | Report bond / reward | 0.1 ETH / 10 reputation | Changeable by vote (`setParameters`) |
 
 ---
@@ -358,7 +368,7 @@ Dispatch cost by payload size: 32 B → 32,429 · 256 B → 37,933 · 1 KB → 6
 ```bash
 cd wp1-dao-collaboration
 npm install
-npm test             # 51 tests
+npm test             # 53 tests
 npm run demo         # the paper's 13 steps, end to end (D1.3)
 npm run dao-demo     # the DAO workspace scenario (D1.2) → results/dao.json
 npm run benchmark    # gas measurements → results/gas.json
@@ -464,7 +474,7 @@ Mirrors are **non-transferable**: access was granted to one specific team.
 - **Liveness:** relaying is permissionless, so anyone can deliver an attested message. Validators that go offline only delay delivery.
 - **Privacy:** only hashes and URIs cross the bridge. Zero-knowledge ownership proofs (paper §3.6.1) are planned in WP4.
 - **Two domains, one EVM:** tests and the demo simulate chains A and B as two gateways on one local network with different domain IDs. `lib/l3.js` takes ordinary ethers contracts, so the same code can relay between two real RPC endpoints.
-- **DAO:** reputation is earned, so early members hold more voting power; the DAO can rebalance it by vote (`grantReputation`, `expelMember`). The L3 validator set is rotated by the validators themselves, not by the DAO, so a captured DAO cannot take over the bridge.
+- **DAO:** reputation is earned, so founding members start with more of it. The voting cap limits any single member to 40 % of the vote, and the DAO can rebalance reputation by vote (`grantReputation`, `expelMember`). The L3 validator set is rotated by the validators themselves, not by the DAO, so a captured DAO cannot take over the bridge.
 - **Not yet implemented:** validator staking and slashing, fees for relayers, para-, side- and super-chain variants of the framework, and governance that spans several chains.
 
 > ⚠️ Research prototype. It has not been audited, so do not use it with real assets.
