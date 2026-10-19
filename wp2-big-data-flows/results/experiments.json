@@ -1,0 +1,280 @@
+{
+  "volume": [
+    {
+      "sensor": "joint1.torque",
+      "unit": "N·m",
+      "rate_hz": 100.0,
+      "readings_per_day": 8640000.0,
+      "mb_per_day": 1382.4
+    },
+    {
+      "sensor": "joint1.temperature",
+      "unit": "°C",
+      "rate_hz": 1.0,
+      "readings_per_day": 86400.0,
+      "mb_per_day": 13.824
+    },
+    {
+      "sensor": "gearbox.vibration",
+      "unit": "mm/s",
+      "rate_hz": 200.0,
+      "readings_per_day": 17280000.0,
+      "mb_per_day": 2764.8
+    },
+    {
+      "sensor": "motor.current",
+      "unit": "A",
+      "rate_hz": 50.0,
+      "readings_per_day": 4320000.0,
+      "mb_per_day": 691.2
+    },
+    {
+      "sensor": "hydraulic.pressure",
+      "unit": "bar",
+      "rate_hz": 10.0,
+      "readings_per_day": 864000.0,
+      "mb_per_day": 138.24
+    },
+    {
+      "sensor": "tool.position",
+      "unit": "mm",
+      "rate_hz": 20.0,
+      "readings_per_day": 1728000.0,
+      "mb_per_day": 276.48
+    }
+  ],
+  "reduction": [
+    {
+      "window_ms": 100,
+      "reduction": 18.599476439790575,
+      "windows": 3056
+    },
+    {
+      "window_ms": 250,
+      "reduction": 45.111111111111114,
+      "windows": 1260
+    },
+    {
+      "window_ms": 500,
+      "reduction": 86.12121212121212,
+      "windows": 660
+    },
+    {
+      "window_ms": 1000,
+      "reduction": 157.88888888888889,
+      "windows": 360
+    },
+    {
+      "window_ms": 2000,
+      "reduction": 315.77777777777777,
+      "windows": 180
+    },
+    {
+      "window_ms": 5000,
+      "reduction": 789.4444444444445,
+      "windows": 72
+    },
+    {
+      "window_ms": 10000,
+      "reduction": 1578.888888888889,
+      "windows": 36
+    }
+  ],
+  "anchor": {
+    "batches": 60,
+    "readings": 22736,
+    "gasFirstAnchor": 126387,
+    "gasPerAnchor": 129605,
+    "gasPerReading": 341.8852920478536,
+    "verifyGas": 35940,
+    "proofLength": 8
+  },
+  "cost": [
+    {
+      "batch": 16,
+      "gas_per_reading": 8100.3125,
+      "proof_bytes": 128
+    },
+    {
+      "batch": 64,
+      "gas_per_reading": 2025.078125,
+      "proof_bytes": 192
+    },
+    {
+      "batch": 256,
+      "gas_per_reading": 506.26953125,
+      "proof_bytes": 256
+    },
+    {
+      "batch": 1024,
+      "gas_per_reading": 126.5673828125,
+      "proof_bytes": 320
+    },
+    {
+      "batch": 4096,
+      "gas_per_reading": 31.641845703125,
+      "proof_bytes": 384
+    },
+    {
+      "batch": 16384,
+      "gas_per_reading": 7.91046142578125,
+      "proof_bytes": 448
+    },
+    {
+      "batch": 65536,
+      "gas_per_reading": 1.9776153564453125,
+      "proof_bytes": 512
+    }
+  ],
+  "detection": {
+    "1": [
+      {
+        "k": 3.0,
+        "precision": 0.5642458100558659,
+        "recall": 0.8487394957983193,
+        "f1": 0.6778523489932886
+      },
+      {
+        "k": 3.5,
+        "precision": 0.868421052631579,
+        "recall": 0.8319327731092437,
+        "f1": 0.849785407725322
+      },
+      {
+        "k": 4.0,
+        "precision": 0.9607843137254902,
+        "recall": 0.8235294117647058,
+        "f1": 0.8868778280542987
+      },
+      {
+        "k": 4.5,
+        "precision": 0.9789473684210527,
+        "recall": 0.7815126050420168,
+        "f1": 0.869158878504673
+      },
+      {
+        "k": 5.0,
+        "precision": 0.9777777777777777,
+        "recall": 0.7394957983193278,
+        "f1": 0.8421052631578947
+      },
+      {
+        "k": 5.5,
+        "precision": 0.9885057471264368,
+        "recall": 0.7226890756302521,
+        "f1": 0.8349514563106796
+      },
+      {
+        "k": 6.0,
+        "precision": 1.0,
+        "recall": 0.7058823529411765,
+        "f1": 0.8275862068965517
+      },
+      {
+        "k": 7.0,
+        "precision": 1.0,
+        "recall": 0.6470588235294118,
+        "f1": 0.7857142857142858
+      }
+    ],
+    "2": [
+      {
+        "k": 3.0,
+        "precision": 0.33852140077821014,
+        "recall": 0.7310924369747899,
+        "f1": 0.46276595744680854
+      },
+      {
+        "k": 3.5,
+        "precision": 0.515527950310559,
+        "recall": 0.6974789915966386,
+        "f1": 0.5928571428571429
+      },
+      {
+        "k": 4.0,
+        "precision": 0.5486111111111112,
+        "recall": 0.6638655462184874,
+        "f1": 0.6007604562737644
+      },
+      {
+        "k": 4.5,
+        "precision": 0.5547445255474452,
+        "recall": 0.6386554621848739,
+        "f1": 0.59375
+      },
+      {
+        "k": 5.0,
+        "precision": 0.49635036496350365,
+        "recall": 0.5714285714285714,
+        "f1": 0.53125
+      },
+      {
+        "k": 5.5,
+        "precision": 0.5114503816793893,
+        "recall": 0.5630252100840336,
+        "f1": 0.536
+      },
+      {
+        "k": 6.0,
+        "precision": 0.5238095238095238,
+        "recall": 0.5546218487394958,
+        "f1": 0.5387755102040817
+      },
+      {
+        "k": 7.0,
+        "precision": 0.6565656565656566,
+        "recall": 0.5462184873949579,
+        "f1": 0.5963302752293578
+      }
+    ]
+  },
+  "throughput": [
+    {
+      "sensors": 6,
+      "throughput": 20738.2522244521,
+      "input_rate": 378.9
+    },
+    {
+      "sensors": 12,
+      "throughput": 18378.79514854543,
+      "input_rate": 758.25
+    },
+    {
+      "sensors": 24,
+      "throughput": 16432.858086180764,
+      "input_rate": 1516.2
+    },
+    {
+      "sensors": 48,
+      "throughput": 13182.831280713137,
+      "input_rate": 3032.95
+    }
+  ],
+  "tamper": {
+    "Modify a value by 10⁻⁶": {
+      "trials": 50,
+      "detected": 1.0,
+      "localised": 1.0
+    },
+    "Delete a reading": {
+      "trials": 50,
+      "detected": 1.0,
+      "localised": 1.0
+    },
+    "Insert a forged reading": {
+      "trials": 50,
+      "detected": 1.0,
+      "localised": 1.0
+    },
+    "Shift a timestamp by 1 ms": {
+      "trials": 50,
+      "detected": 1.0,
+      "localised": 1.0
+    },
+    "Swap two batches": {
+      "trials": 50,
+      "detected": 1.0,
+      "localised": 1.0
+    }
+  }
+}

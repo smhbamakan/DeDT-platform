@@ -1,0 +1,9 @@
+{
+  "batches": 60,
+  "readings": 22736,
+  "gasFirstAnchor": 126387,
+  "gasPerAnchor": 129605,
+  "gasPerReading": 341.8852920478536,
+  "verifyGas": 35940,
+  "proofLength": 8
+}

@@ -1,0 +1,166 @@
+{
+  "twin": "robot-arm-07",
+  "batch": {
+    "twinId": "0x8a9019223807093f6e32257f01e3876537fcdeef1c545e2ee99e9975ecfaef11",
+    "index": 0,
+    "merkleRoot": "0x019a5af8f0271e4f83f03f9d0ea5f45a9ec0704f36da57f98ead43b8253d7cc2",
+    "summaryHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 377,
+    "startMs": 0,
+    "endMs": 1000,
+    "chain": "0xee57315476893452f839c3a261215516885d25c4517ad67b2f2aa0fb443b743d"
+  },
+  "readings": [
+    {
+      "sensor": "gearbox.vibration",
+      "sensorId": "0xd8f71f89e831618a493400a85aaf32778cea02ddca309a6fcc560f5ece1217d9",
+      "seq": 0,
+      "tEventMs": 0,
+      "valueMicro": "2038032",
+      "proof": [
+        "0xfd48850484cb452ad2b5e7b3daf34094ae80ea858198c8232d65e9b787675609",
+        "0x2825d5cdd0a88a8cc27cd08ddf9b8e32e9a448c04c80e6fc1fdd90f6fe4964b7",
+        "0xf75478e2b0bba45e36911845aee00bbc80121cf162b37236647f248947d5493a",
+        "0xffff774ef127d20c9efa1a1dbc01bfef522c6f5ac4b80141fda8e846953c4b3c",
+        "0x7f8207ce36ecfec7a5ff578527f2a3deb2db3246960d830c7f28dc0e37fa6b2b",
+        "0x299c3ca2dc60431ce46fba86e53303a129d90e836fe08a0b5b084928baf02993",
+        "0xe97f2d6b950f007e7d12e6262d4cc5918d9c4f7a63fa2bf7717e5dcfc47f85b4",
+        "0x1253f47651c8bad80b9f9033bbbd0ab5c3c662b932d59cd9ca0b00ff0383eb01"
+      ]
+    },
+    {
+      "sensor": "tool.position",
+      "sensorId": "0xb46cb079e781b08154ebee4511d995ac9ddaef5c756c8f3a7f3fd674e15ba275",
+      "seq": 0,
+      "tEventMs": 0,
+      "valueMicro": "-59049",
+      "proof": [
+        "0x8516769286faf334afd6a1de1001e9c178e941152dcd408925170b5bc4aa859d",
+        "0xd612a0a4430af41b9a84c71db8a0db45f35e09869bc0ee7eb8381cef53afc277",
+        "0xd87755e3e87c1af2c88b3ed337223176991bacbcdb3055903d961e90c5370f46",
+        "0x055fb51d424fdd1cada907db9bd478f1e597e5baf019e5a6e8c29d0a7895661e",
+        "0x18443292a693d14ea5146f94efb0a95b3a95b92dce8c5edb7bf25cd2bef7bd38",
+        "0x7daf30d70303364e9d739ff0ce859999ed5a59f01c559ebef9665ba1b5ad1222",
+        "0x30ab7118370a0ef0dffb6c040df9e0b7f344d037f546ef5a5b39bb629e4727f0",
+        "0x2121bcfc96de36286445b94dee953165f97a29630f822697a0f4a6cd6a8dc9d4",
+        "0xaff93dc02b6ba53516ec9b179f023a187a54b0b6e9df1ee9e90f8419d369ae40"
+      ]
+    },
+    {
+      "sensor": "gearbox.vibration",
+      "sensorId": "0xd8f71f89e831618a493400a85aaf32778cea02ddca309a6fcc560f5ece1217d9",
+      "seq": 1,
+      "tEventMs": 5,
+      "valueMicro": "2270060",
+      "proof": [
+        "0xf208de5052d6378b3b3b0d09db508f5b0b134285a9a84cb8355b7712edd6a1e9",
+        "0x81a82ccfed071b8315309e3615ddb1c765bd39047f6ebbcf569d1b07be7c3e34",
+        "0xd9193f885f31213593e1b49da1cdec9bc2b681cfdaa862af1291f9c2b0959395",
+        "0x4062e73747acdcc41e31d281528334477a3c1637cb1547f905260ed371983bae",
+        "0x399b335fb61a29a2eb2400a758f80f765fb35652505c7b1e6441e08fb94ee486",
+        "0x299c3ca2dc60431ce46fba86e53303a129d90e836fe08a0b5b084928baf02993",
+        "0xe97f2d6b950f007e7d12e6262d4cc5918d9c4f7a63fa2bf7717e5dcfc47f85b4",
+        "0x1253f47651c8bad80b9f9033bbbd0ab5c3c662b932d59cd9ca0b00ff0383eb01"
+      ]
+    },
+    {
+      "sensor": "joint1.torque",
+      "sensorId": "0xb32c3328005d47f3acc535b8c09f33b0c68396c17dbda6f7f57da42a1784cb5c",
+      "seq": 1,
+      "tEventMs": 10,
+      "valueMicro": "41350231",
+      "proof": [
+        "0x258c5c8640b852839d16d56db1b297b4c0cac04c7df87a0b7566dcdfa230fb61",
+        "0xfbab1d595dcfb48a095550f6f57e0de799f4d64202abfa12906a3f6e7da1c4d6",
+        "0x55eb2d81f5a574718da73f27a3f681b4fc98c15032721e01efff14588a14378d",
+        "0x17023eb4923510cd4629e81ea69648eae20961cf979f3a8dae380869e7daf0d7",
+        "0xc843011d7d31671e580a30891a2b061780cce99fedf26a05f0a604fcb57e2c70",
+        "0x5b4a34c3136e10b2818b8ab13a86a1533ea41c629817527b8d8b0b116562dddf",
+        "0xa471fc4306b778d416c6cbe87b3836499b65ec49c1b52384cd07f3ea946fc3fa",
+        "0x7b5dccdee3cb138957c8dbf1d1ef0d00eb563a03d1ffff63af0369717f994ba1",
+        "0xaff93dc02b6ba53516ec9b179f023a187a54b0b6e9df1ee9e90f8419d369ae40"
+      ]
+    },
+    {
+      "sensor": "gearbox.vibration",
+      "sensorId": "0xd8f71f89e831618a493400a85aaf32778cea02ddca309a6fcc560f5ece1217d9",
+      "seq": 3,
+      "tEventMs": 15,
+      "valueMicro": "2322907",
+      "proof": [
+        "0xb89afe73a68ee692831dfabd4aae27a6dfce28a738160951668f809064172be0",
+        "0x9780cb5ee202905702463785948d0c731462bd151ddaf576e04afc0379386dd0",
+        "0xe0d32f8410a43fafc151980dd4aa5c9ef97630e7ef2b5e9af0c80cc4207ed888",
+        "0x3b303aab0c8776825e32e02d53e6805a7c5b67ec8f39e00449345cf86b6ef82b",
+        "0x698bb0f694f53d0575e82dcb9794a4ba3b3f901fa435e2f7b90feec227fc051a",
+        "0x2f40d62c0f69d2d3ab1c1f4817652d4e55f3c96e25d49c8687738a6eb4dcc189",
+        "0x5407039d99e317cd77cfcda334e46a58e0158249ca0a557f28c3d430d3560398",
+        "0x1253f47651c8bad80b9f9033bbbd0ab5c3c662b932d59cd9ca0b00ff0383eb01"
+      ]
+    },
+    {
+      "sensor": "hydraulic.pressure",
+      "sensorId": "0x1a28506fbdf107861c622355aad2bb5001d8cb83f7f9be7719579927c9aa4ae6",
+      "seq": 0,
+      "tEventMs": 0,
+      "valueMicro": "180408075",
+      "proof": [
+        "0x73daaa22e0def26213b01ff3e2a369ee4b97695c810f3278b1801f6a3ef8f9c0",
+        "0xf88690fe32a3356834bce1d5fb80466fc443924c12998643348a31d10a8e8c0c",
+        "0xd45e3735bae146689df4e96abb15d5ffe3653fd629d675de30feb1a0dce597fe",
+        "0xf04b7d5da81cda266b88a7b6747adea3acb3f219d20d0b7dc313185f4499edda",
+        "0x89c51789589dd0ac6ef6e2259a7d379594bb2da64310ce55a997accc0c962126",
+        "0xf0fb81cc4f9d4c3399abab3402127bbf67c0f9bdbe71e7d845b1c66d9e169df7",
+        "0x30ab7118370a0ef0dffb6c040df9e0b7f344d037f546ef5a5b39bb629e4727f0",
+        "0x2121bcfc96de36286445b94dee953165f97a29630f822697a0f4a6cd6a8dc9d4",
+        "0xaff93dc02b6ba53516ec9b179f023a187a54b0b6e9df1ee9e90f8419d369ae40"
+      ]
+    },
+    {
+      "sensor": "gearbox.vibration",
+      "sensorId": "0xd8f71f89e831618a493400a85aaf32778cea02ddca309a6fcc560f5ece1217d9",
+      "seq": 4,
+      "tEventMs": 20,
+      "valueMicro": "2434651",
+      "proof": [
+        "0x362f3b9ad9ab68289eb181af8d5c1c0125c13a5b475c1ce4d61ae78abc7ae197",
+        "0x4324a56f69b78e0e5acd6177eff56e45230f7cfd0f419c580f36e4531141a9e7",
+        "0x97d3b28329549caf77834aaf5ecc9e968e27109f232ee8862e674fea399b5632",
+        "0x233241ca3c42a6106dc419e9df7c83c1006a24a199ddc64e50ccc00fb93bf9db",
+        "0x56078eff3428fed50a691157dc22ad7f948e2d8c54f14ba06f365475e271e8f0",
+        "0xfdae67fb386d39edf2713ff1050c2caf0f571c62b7745eb3c6fada79b4c29c76",
+        "0x31a811132086a97a1f69532ebbaf3b7afb0f71ab991566b1c5bf1e2064fabf8f",
+        "0x7b5dccdee3cb138957c8dbf1d1ef0d00eb563a03d1ffff63af0369717f994ba1",
+        "0xaff93dc02b6ba53516ec9b179f023a187a54b0b6e9df1ee9e90f8419d369ae40"
+      ]
+    },
+    {
+      "sensor": "joint1.temperature",
+      "sensorId": "0x1f8fb48353ea07f75c353c6d8d4e62c9838f7204e104a46f4c9e3abc92bcb661",
+      "seq": 0,
+      "tEventMs": 0,
+      "valueMicro": "55321862",
+      "proof": [
+        "0x16f86db6df1c730489c16b07d783cd2ac591884c3e78fa0ec0cab79a5919d5de",
+        "0xdd8ca59f6c095eeca2d6941aea6071af60358880771d8eb98f7e30b42499e8ab",
+        "0x858e5c88ff87e14ef933a95a0b95b19d69b66a5df6165af4aeb14a930b02e917",
+        "0x5f77ae6f107166f97b1e84e37818ce4df8959e802fda64bbe019a13127a4e102",
+        "0x4e4cf216639b8aabd28691fdac107622237a63b7dad9e58c111c47d8eb48c80b",
+        "0x102c8eb25b815f375c2c604f60a24cdcd81fff1215b4a575e9267d65be65a0b7",
+        "0xa471fc4306b778d416c6cbe87b3836499b65ec49c1b52384cd07f3ea946fc3fa",
+        "0x7b5dccdee3cb138957c8dbf1d1ef0d00eb563a03d1ffff63af0369717f994ba1",
+        "0xaff93dc02b6ba53516ec9b179f023a187a54b0b6e9df1ee9e90f8419d369ae40"
+      ]
+    }
+  ],
+  "next": {
+    "twinId": "0x8a9019223807093f6e32257f01e3876537fcdeef1c545e2ee99e9975ecfaef11",
+    "index": 1,
+    "merkleRoot": "0x51fe9b4ceb35ab5fb29ca0b37af8c9e96f392350883e4dda7dfa2be44e7cf380",
+    "summaryHash": "0xfe80981f6246784d3d76f8dea36fd899c2161cb28324dcd9a0e81f5a358b5990",
+    "count": 375,
+    "startMs": 1000,
+    "endMs": 2000,
+    "chain": "0xfca1ec1c3eb5e5c29780c5b516a7af6625f5cd42357a0156cf68f368825d0688"
+  }
+}

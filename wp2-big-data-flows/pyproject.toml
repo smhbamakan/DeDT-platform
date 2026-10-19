@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dedt-flows"
+version = "0.1.0"
+description = "DeDT WP2: simulation, edge processing and blockchain-anchored integrity of digital twin data flows"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = ["pycryptodome>=3.20", "numpy>=1.26"]
+
+[project.optional-dependencies]
+figures = ["matplotlib>=3.8"]
+test = ["pytest>=8.0"]
+
+[tool.setuptools]
+packages = ["dedt_flows"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

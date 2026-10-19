@@ -7,6 +7,7 @@
 [![Website](https://img.shields.io/badge/website-smhbamakan.github.io%2FDeDT-1e40af)](https://smhbamakan.github.io/DeDT/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![WP1 contracts](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml/badge.svg)](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml)
+[![WP2 data flows](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp2-data-flows.yml/badge.svg)](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp2-data-flows.yml)
 [![WP3 contracts](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp3-contracts.yml/badge.svg)](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp3-contracts.yml)
 ![MSCA](https://img.shields.io/badge/MSCA-Postdoctoral%20Fellowship-003399)
 ![Masaryk University](https://img.shields.io/badge/host-Masaryk%20University-0e9384)
@@ -59,7 +60,7 @@ flowchart TB
 |---|---|---|---|---|
 | [`wp1-dao-collaboration/`](wp1-dao-collaboration/) | **WP1** · DAO workspace for twin teams (D1.2) + L3 collaboration across blockchains (D1.3) | O1, O2 | Solidity · Hardhat · Python | ✅ Prototype + tests + figures |
 | [`wp3-ip-nft-fundraising/`](wp3-ip-nft-fundraising/) | **WP3** · IP-NFTs & fundraising | O3 | Solidity · Hardhat | ✅ Prototype + tests |
-| [`wp2-big-data-flows/`](wp2-big-data-flows/) | **WP2** · Big data flows | O2 | Python | 🔜 Step 4 |
+| [`wp2-big-data-flows/`](wp2-big-data-flows/) | **WP2** · Big data flows: edge processing and on-chain integrity | O2 | Python · Solidity | ✅ Prototype + tests + experiments |
 | [`wp4-trust-auditing/`](wp4-trust-auditing/) | **WP4** · Trust & auditing | O4 | Python · Solidity | 🔜 Step 5 |
 | [`docs/`](docs/) | Documentation & tutorials | — | Markdown | 🔜 Step 6 |
 
@@ -73,7 +74,7 @@ timeline
     Step 1 : WP3 IP-NFT registry : NFT-backed crowdfunding : IP share tokens
     Step 2 : WP1 L3 gateway (AEI 2025 paper) : dNFT sharing across chains : HTLC atomic swaps
     Step 3 : WP1 DAO workspace (D1.2) : reputation voting and timelock : parallel tasks, experiments, reports
-    Step 4 : WP2 sensor stream simulator : edge aggregation : Merkle anchoring on-chain
+    Step 4 : WP2 sensor stream simulator : edge processing and anomaly detection : Merkle anchoring on-chain
     Step 5 : WP4 identity-based encryption : self-judgment authentication : ZKP ownership proofs
     Step 6 : Integration demo : tutorials & docs
 ```

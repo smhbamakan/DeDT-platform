@@ -1,0 +1,17 @@
+{
+  "name": "dedt-wp2-data-anchor",
+  "version": "0.1.0",
+  "description": "DeDT WP2: on-chain anchoring of digital twin data-flow integrity",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "hardhat test",
+    "coverage": "hardhat coverage",
+    "anchor": "hardhat run scripts/anchor.js"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.1.0",
+    "hardhat": "^2.26.0"
+  }
+}

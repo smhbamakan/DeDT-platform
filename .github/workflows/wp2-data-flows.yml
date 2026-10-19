@@ -1,0 +1,47 @@
+name: WP2 data flows
+
+on:
+  push:
+    paths: ["wp2-big-data-flows/**", ".github/workflows/wp2-data-flows.yml"]
+  pull_request:
+    paths: ["wp2-big-data-flows/**"]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wp2-big-data-flows
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+      - run: python -m dedt_flows.pipeline --duration 20
+
+  solidity:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wp2-big-data-flows
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: wp2-big-data-flows/chain/package-lock.json
+      - run: pip install -r requirements.txt
+      # regenerate the fixture and the anchors from Python, then check them on-chain
+      - run: python -m dedt_flows.pipeline --duration 20
+      - run: npm ci
+        working-directory: wp2-big-data-flows/chain
+      - run: npx hardhat test
+        working-directory: wp2-big-data-flows/chain
+      - run: npm run anchor
+        working-directory: wp2-big-data-flows/chain

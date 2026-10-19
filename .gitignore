@@ -24,3 +24,5 @@ Thumbs.db
 .idea/
 coverage.json
 .venv/
+out/
+.pytest_cache/
