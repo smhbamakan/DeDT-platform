@@ -92,9 +92,25 @@ timeline
 - **Dr. Seyed Mojtaba Hosseini Bamakan**, MSCA Postdoctoral Fellow (Principal Investigator), Department of Business Management, Masaryk University · [Google Scholar](https://scholar.google.com/citations?user=YqXUN0AAAAAJ&hl=en&oi=ao)
 - **Prof. Ahad Zareravasan**, Supervisor, Department of Business Management, Masaryk University
 
-## 📚 Citation
+## 📚 Publications
 
-> Hosseini Bamakan, S. M., et al. *DeDTs: A Decentralized Digital Twins Platform Based on Blockchain Technology and Web3.* Blockchain: Research and Applications (Elsevier). https://www.sciencedirect.com/science/article/pii/S2772918424000304
+> Banaeian Far, S., & Hosseini Bamakan, S. M. (2025). *Analyzing potential collaboration methods for digital twin teams developed on heterogeneous blockchains without a central authority.* **Advanced Engineering Informatics**, 68, 103616. https://doi.org/10.1016/j.aei.2025.103616
+
+<details>
+<summary>BibTeX</summary>
+
+```bibtex
+@article{banaeianfar2025collaboration,
+  title   = {Analyzing potential collaboration methods for digital twin teams developed on heterogeneous blockchains without a central authority},
+  author  = {Banaeian Far, Saeed and Hosseini Bamakan, Seyed Mojtaba},
+  journal = {Advanced Engineering Informatics},
+  volume  = {68},
+  pages   = {103616},
+  year    = {2025},
+  doi     = {10.1016/j.aei.2025.103616}
+}
+```
+</details>
 
 ## ⚖️ License
 
