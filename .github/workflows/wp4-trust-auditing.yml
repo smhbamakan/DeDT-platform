@@ -1,0 +1,44 @@
+name: WP4 trust and auditing
+
+on:
+  push:
+    paths: ["wp4-trust-auditing/**", ".github/workflows/wp4-trust-auditing.yml"]
+  pull_request:
+    paths: ["wp4-trust-auditing/**"]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wp4-trust-auditing
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+      - run: python -m dedt_trust.demo
+
+  solidity:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wp4-trust-auditing/chain
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # the tests take keys, signatures and proofs from the Python reference implementation
+      - run: pip install -r ../requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: wp4-trust-auditing/chain/package-lock.json
+      - run: npm ci
+      - run: npx hardhat test
+        env:
+          DEDT_PYTHON: python

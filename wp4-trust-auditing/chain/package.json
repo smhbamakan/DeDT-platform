@@ -1,0 +1,17 @@
+{
+  "name": "dedt-wp4-trust-auditing",
+  "version": "0.1.0",
+  "description": "DeDT WP4: on-chain verification of self-judging data authentication and zero-knowledge birth-certificate proofs on BN254",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "hardhat test",
+    "coverage": "hardhat coverage",
+    "gas": "hardhat run scripts/gas.js"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.1.0",
+    "hardhat": "^2.26.0"
+  }
+}

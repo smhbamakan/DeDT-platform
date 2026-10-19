@@ -1,0 +1,98 @@
+{
+  "python": "3.14.2",
+  "machine": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "reps": 5,
+  "primitives_ms": {
+    "pairing": 583.3412999927532,
+    "G1 scalar mult": 11.018250006600283,
+    "G2 scalar mult": 54.56725000112783
+  },
+  "encryption_ms": {
+    "IBE encrypt": 668.7035000068136,
+    "IBE decrypt": 702.748400013661,
+    "ECIES encrypt": 1.576000009663403,
+    "ECIES decrypt": 0.82894999650307,
+    "partial key (1 server)": 8.847200020682067,
+    "verify partial key": 1226.4504000195302,
+    "obtain key (t = 3, verified)": 3260.6781000067713
+  },
+  "overhead_bytes": {
+    "IBE": 188,
+    "ECIES": 61
+  },
+  "operation_counts": {
+    "IBE encrypt": {
+      "pairings": 1,
+      "G1 mult": 1,
+      "G2 mult": 1,
+      "hash to G1": 1
+    },
+    "IBE decrypt": {
+      "pairings": 1,
+      "G2 mult": 1
+    },
+    "partial key": {
+      "G1 mult": 1,
+      "hash to G1": 1
+    },
+    "verify partial key": {
+      "pairings": 2
+    },
+    "ECIES encrypt": {
+      "EC mult (secp256k1)": 2
+    },
+    "ECIES decrypt": {
+      "EC mult (secp256k1)": 1
+    }
+  },
+  "dkg_ms": {
+    "3": {
+      "t": 3,
+      "ms": 957.1032999956515
+    },
+    "5": {
+      "t": 4,
+      "ms": 2651.6947000054643
+    },
+    "7": {
+      "t": 5,
+      "ms": 4529.072700010147
+    },
+    "9": {
+      "t": 7,
+      "ms": 7307.8772999870125
+    }
+  },
+  "bls_ms": {
+    "sign": 8.655100013129413,
+    "aggregate 8 signatures": 0.1407999952789396,
+    "verify aggregate (dual check)": 933.4180999867385
+  },
+  "zkp_ms": {
+    "0": {
+      "prove": 133.3320999983698,
+      "verify": 91.3981000194326
+    },
+    "2": {
+      "prove": 106.60999998799525,
+      "verify": 75.3475000092294
+    },
+    "4": {
+      "prove": 110.78280000947416,
+      "verify": 85.85840000887401
+    },
+    "6": {
+      "prove": 71.25179999275133,
+      "verify": 80.48370000324212
+    }
+  },
+  "zkp_proof_bytes": {
+    "0": 320,
+    "1": 320,
+    "2": 320,
+    "3": 320,
+    "4": 320,
+    "5": 320,
+    "6": 320
+  }
+}

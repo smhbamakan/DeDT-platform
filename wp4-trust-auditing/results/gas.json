@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-10-19T16:27:08.522Z",
+  "dataAuthenticator": {
+    "submitBatch": [
+      {
+        "signers": 1,
+        "gas": 223221
+      },
+      {
+        "signers": 2,
+        "gas": 223159
+      },
+      {
+        "signers": 4,
+        "gas": 233561
+      },
+      {
+        "signers": 8,
+        "gas": 259592
+      },
+      {
+        "signers": 16,
+        "gas": 301150
+      },
+      {
+        "signers": 32,
+        "gas": 379179
+      }
+    ],
+    "addSigner": 237581,
+    "isAuthentic_256_records": 34050,
+    "reportEquivocation_8_signers": 235231
+  },
+  "birthCertificate": {
+    "deploy_6_attributes": 1566622,
+    "prove": [
+      {
+        "disclosed": 0,
+        "gas": 134750
+      },
+      {
+        "disclosed": 1,
+        "gas": 135946
+      },
+      {
+        "disclosed": 2,
+        "gas": 137154
+      },
+      {
+        "disclosed": 3,
+        "gas": 138339
+      },
+      {
+        "disclosed": 4,
+        "gas": 139175
+      },
+      {
+        "disclosed": 5,
+        "gas": 140372
+      },
+      {
+        "disclosed": 6,
+        "gas": 141544
+      }
+    ],
+    "register": 97604,
+    "rotate": 69377
+  },
+  "keyServerRegistry": {
+    "setParameters_5_servers": 1570300
+  }
+}
