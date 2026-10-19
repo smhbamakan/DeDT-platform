@@ -10,6 +10,7 @@
     "coverage": "hardhat coverage",
     "demo": "hardhat run scripts/demo.js",
     "benchmark": "hardhat run scripts/benchmark.js",
+    "dao-demo": "hardhat run scripts/dao-demo.js",
     "figures": "python analysis/make_figures.py"
   },
   "devDependencies": {

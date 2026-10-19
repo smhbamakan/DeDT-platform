@@ -221,6 +221,72 @@ def fig_profile(t, mode):
     save(fig, "paper-profile", mode)
 
 
+# --------------------------------------------------------------------------- 6-8. DAO (D1.2)
+DAO = json.loads((ROOT / "results" / "dao.json").read_text())
+
+
+def fig_dao_reputation(t, mode):
+    snaps = DAO["reputation"]
+    members = [k for k in snaps[0] if k != "stage"]
+    x = np.arange(len(members))
+    w = 0.26
+    ramp = t["ramp"][1:] if mode == "light" else t["ramp"][:3]  # three ordered stages
+    fig, ax = plt.subplots(figsize=(7.2, 3.8))
+    for i, (s, c) in enumerate(zip(snaps, ramp)):
+        vals = [s[m] for m in members]
+        bars = ax.bar(x + (i - 1) * w, vals, w, color=c, edgecolor=t["surface"], linewidth=2, label=s["stage"])
+        if i == len(snaps) - 1:  # label only the final state
+            for b, v in zip(bars, vals):
+                ax.text(b.get_x() + b.get_width() / 2, v + 2, str(v), ha="center", color=t["ink"], fontsize=9)
+    ax.set_xticks(x, members)
+    ax.grid(axis="x", visible=False)
+    ax.tick_params(axis="x", length=0)
+    ax.set_ylabel("reputation (= voting power)")
+    ax.set_title("Reputation follows contributions in the D1.2 scenario")
+    ax.legend(loc="upper left", bbox_to_anchor=(0, -0.12), ncol=3, fontsize=9)
+    save(fig, "dao-reputation", mode)
+
+
+def fig_dao_votes(t, mode):
+    props = DAO["proposals"][::-1]
+    labels = [p["title"] for p in props]
+    y = np.arange(len(props))
+    parts = [("For", "for", t["series"][0]), ("Against", "against", t["series"][1]), ("Abstain", "abstain", t["other"])]
+    fig, ax = plt.subplots(figsize=(7.2, 2.9))
+    left = np.zeros(len(props))
+    for name, key, c in parts:
+        vals = np.array([p[key] for p in props], dtype=float)
+        ax.barh(y, vals, left=left, height=0.55, color=c, edgecolor=t["surface"], linewidth=2, label=name)
+        left += vals
+    for yi, p, total in zip(y, props, left):
+        ax.text(total + 4, yi, f"{p['state']}", va="center", color=t["ink2"], fontsize=9)
+    ax.set_yticks(y, labels)
+    ax.set_xlim(0, max(left) * 1.25)
+    ax.grid(axis="y", visible=False)
+    ax.tick_params(axis="y", length=0)
+    ax.set_xlabel("votes (reputation at the proposal's snapshot)")
+    ax.set_title("Every workspace decision went through a vote")
+    ax.legend(loc="upper left", bbox_to_anchor=(0, -0.3), ncol=3, fontsize=9)
+    save(fig, "dao-votes", mode)
+
+
+def fig_dao_gas(t, mode):
+    items = list(DAO["actions"].items())[::-1]
+    labels = [k for k, _ in items]
+    vals = [v for _, v in items]
+    fig, ax = plt.subplots(figsize=(7.2, 4.1))
+    ax.barh(labels, vals, height=0.62, color=t["series"][0], edgecolor=t["surface"], linewidth=2)
+    ax.xaxis.set_major_formatter(kgas)
+    ax.grid(axis="y", visible=False)
+    ax.set_xlim(0, max(vals) * 1.16)
+    for yi, v in enumerate(vals):
+        ax.text(v + max(vals) * 0.012, yi, f"{v / 1000:.0f}k", va="center", color=t["ink"], fontsize=9)
+    ax.set_xlabel("gas")
+    ax.set_title("Gas per DAO action")
+    ax.tick_params(axis="y", length=0)
+    save(fig, "dao-gas", mode)
+
+
 def main():
     for mode, t in THEMES.items():
         style(t)
@@ -229,6 +295,9 @@ def main():
         fig_table23(t, mode)
         fig_complexity(t, mode)
         fig_profile(t, mode)
+        fig_dao_reputation(t, mode)
+        fig_dao_votes(t, mode)
+        fig_dao_gas(t, mode)
 
     print("Reproduction of paper Table 23 efficiency = 1 / (T[s] * C[USD]):")
     for name, ms, usd in TABLE23:

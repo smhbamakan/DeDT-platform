@@ -1,13 +1,13 @@
 <div align="center">
 
-# 🔗 WP1 · L3 Collaboration for Digital Twin Teams
+# 🔗 WP1 · Distributed Collaboration Platform
 
-**Digital twin teams on *different* blockchains share and co-develop a twin, with no central authority.**
+**Twin teams run a shared workspace as a DAO (D1.2) and share twins across *different* blockchains (D1.3), with no central authority.**
 
 [![WP1 contracts](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml/badge.svg)](https://github.com/smhbamakan/DeDT-platform/actions/workflows/wp1-contracts.yml)
 ![Solidity](https://img.shields.io/badge/Solidity-0.8.28-363636?logo=solidity)
 ![Hardhat](https://img.shields.io/badge/Hardhat-2.x-f0d50c?logo=ethereum&logoColor=black)
-![Tests](https://img.shields.io/badge/tests-26%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-51%20passing-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-99%25-brightgreen)
 ![Objectives](https://img.shields.io/badge/objectives-O1%20%C2%B7%20O2-1e40af)
 
@@ -29,6 +29,7 @@
 | [`HashTimeLock.sol`](contracts/HashTimeLock.sol) | §3.1.1 (atomic swap) | **HTLC** for trustless cross-chain swaps, e.g. a twin dNFT on chain A for ETH on chain B. No validators involved. |
 | [`lib/l3.js`](lib/l3.js) | Steps 9–12 | Off-chain validators (attest) and a permissionless relayer (deliver). Works with two real RPC endpoints or one local network. |
 | [`analysis/make_figures.py`](analysis/make_figures.py) | Tables 7, 17, 23 | Charts from our gas measurements and from the paper's evaluation tables. |
+| [`contracts/dao/`](contracts/dao/) · [`lib/dao.js`](lib/dao.js) | Proposal WP1 · D1.2 | **The twin teams' DAO**: reputation, governor, timelock and the shared workspace (see the D1.2 section below). |
 
 ---
 
@@ -103,6 +104,156 @@ sequenceDiagram
     GA->>NA: revision recorded: author = team #2, chain = B
     end
 ```
+
+---
+
+## 🏛️ D1.2 · The twin teams' DAO
+
+The proposal's answer to WP1 is a **DAO that gives twin teams a common virtual workspace, managed by the teams themselves** (WP1 Solution). It should support **parallel intelligence, computational experiments and parallel execution** (WP1 Techniques). [`contracts/dao/`](contracts/dao/) implements it on OpenZeppelin Governor:
+
+| Contract | Role |
+|---|---|
+| [`DTReputation.sol`](contracts/dao/DTReputation.sol) | **Non-transferable reputation = voting power.** Earned by contributing, lost when misbehaviour is upheld; it cannot be bought or moved. Whole points; holders are self-delegated automatically. |
+| [`TwinTeamGovernor.sol`](contracts/dao/TwinTeamGovernor.sol) | **Proposals and voting** (for / against / abstain), proposal threshold, quorum as a share of total reputation. |
+| `TimelockController` (OpenZeppelin) | **Delay before execution**, so members can react to a decision before it takes effect. It owns the workspace and the dNFT bridge configuration. |
+| [`TwinWorkspace.sol`](contracts/dao/TwinWorkspace.sol) | **The workspace:** membership, twin projects, funded tasks run in parallel, computational experiments with endorsements, bonded misbehaviour reports, and the treasury. |
+
+```mermaid
+flowchart TB
+    M(["👥 Members<br/>(reputation holders)"])
+    G["TwinTeamGovernor<br/>propose · vote"]
+    TL["Timelock<br/>delay, then execute"]
+    W["TwinWorkspace"]
+    R["DTReputation<br/>voting power"]
+    N["DigitalTwinDNFT<br/>bridge configuration"]
+    T[("Treasury")]
+
+    M -- "propose / vote" --> G
+    R -. "votes at snapshot" .-> G
+    G -- "queue" --> TL
+    TL -- "admit · expel · create project · fund task · rule on report" --> W
+    TL -- "setTrustedRemote (which chains)" --> N
+    W -- "mint / burn" --> R
+    W --- T
+    M -- "claim task · submit result · experiment · endorse · report" --> W
+```
+
+### What the DAO decides, and what members do directly
+
+| By vote (`onlyDAO`) | Directly, as a member |
+|---|---|
+| Admit, reward or expel members | Claim a task, submit its result |
+| Create a project around a twin dNFT and choose its lead | Record a computational experiment (configuration + result hashes) |
+| Fund tasks from the treasury (bounty + reputation) | Endorse another member's experiment (weighted by reputation) |
+| Rule on misbehaviour reports (slash, reward) | File a bonded misbehaviour report |
+| Choose which blockchains the twins connect to | The **project lead** approves or rejects results; a lead's own work needs the DAO |
+
+### Lifecycles
+
+<table>
+<tr>
+<td width="50%">
+
+**Proposal**
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending: propose
+    Pending --> Active: voting delay
+    Pending --> Canceled: proposer withdraws
+    Active --> Defeated: no quorum or<br/>against ≥ for
+    Active --> Succeeded: quorum and<br/>for > against
+    Succeeded --> Queued: queue
+    Queued --> Executed: timelock delay, execute
+```
+</td>
+<td width="50%">
+
+**Task (parallel workstreams)**
+
+```mermaid
+stateDiagram-v2
+    [*] --> Open: DAO funds it
+    Open --> Claimed: member claims
+    Claimed --> Submitted: result hash
+    Submitted --> Completed: lead approves<br/>bounty + reputation
+    Submitted --> Open: lead rejects
+    Open --> Cancelled: DAO
+    Claimed --> Cancelled: DAO
+```
+</td>
+</tr>
+</table>
+
+**Collective monitoring.** Any member can report another member's misbehaviour by posting a bond. The DAO votes on the report:
+- **Upheld:** the accused loses reputation, and the reporter gets the bond back plus a reputation reward.
+- **Dismissed:** the bond goes to the treasury, which discourages spam reports.
+
+This follows the reporting protocol of Banaeian Far & Hosseini Bamakan, *Blockchain-based reporting protocols as a collective monitoring mechanism in DAOs*, Data Science and Management 5(1), 2022, which the proposal cites for WP1. Pending bonds are kept apart from the treasury, so they can never fund a task.
+
+### The D1.2 scenario (`npm run dao-demo`)
+
+Three founding teams run the workspace together, and a fourth team joins by vote:
+- Two tasks are carried out in parallel.
+- One experiment is recorded and reproduced by other members.
+- A report is upheld against a member who falsified data.
+- The DAO decides which blockchain the twin connects to.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/figures/dao-reputation-dark.png">
+  <img alt="Grouped bars of reputation per member at three stages: Lead stays at 100; Alice rises from 60 to 75 after a task; Bob drops from 40 to 20 after an upheld report; Carol joins with 30 and reaches 50." src="docs/figures/dao-reputation-light.png" width="720">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/figures/dao-votes-dark.png">
+  <img alt="Stacked bars of votes for three proposals, all executed: 200 for 0 against; 215 for 40 against; 150 for 0 against." src="docs/figures/dao-votes-light.png" width="720">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/figures/dao-gas-dark.png">
+  <img alt="Gas per DAO action: propose 100k, vote 72k, queue 182k, execute a 4-action proposal 625k, claim 58k, submit 56k, approve 149k, experiment 151k, endorse 84k, report 171k." src="docs/figures/dao-gas-light.png" width="720">
+</picture>
+
+<details>
+<summary>Data tables</summary>
+
+| Member | Founding | After tasks | After report |
+|---|---:|---:|---:|
+| Lead (manufacturing lab) | 100 | 100 | 100 |
+| Alice (data science team) | 60 | 75 | 75 |
+| Bob (IoT company) | 40 | 40 | 20 |
+| Carol (university lab) | — | 40 | 50 |
+
+| Proposal | For | Against | Result |
+|---|---:|---:|---|
+| Admit Carol, open the robot-arm project, fund two tasks | 200 | 0 | Executed |
+| Uphold report #0 and slash Bob by 20 reputation | 215 | 40 | Executed |
+| Connect the twin dNFT to chain 2002 | 150 | 0 | Executed |
+
+| Action | Gas |
+|---|---:|
+| Propose | 99,539 |
+| Cast vote (average) | 71,944 |
+| Queue in timelock | 181,909 |
+| Execute (4 actions) | 625,196 |
+| Claim task | 58,405 |
+| Submit result | 55,508 |
+| Approve task (pays bounty, mints reputation) | 148,586 |
+| Submit experiment | 150,567 |
+| Endorse experiment | 84,476 |
+| File report (bonded) | 170,672 |
+</details>
+
+### Governance parameters (defaults in [`lib/dao.js`](lib/dao.js))
+
+| Parameter | Default | Meaning |
+|---|---|---|
+| Voting delay | 1 block | Time to review a proposal before voting starts |
+| Voting period | 20 blocks | Short for the demo; use about one week of blocks in production |
+| Proposal threshold | 10 reputation | Minimum reputation to submit a proposal |
+| Quorum | 20 % | Share of total reputation that must vote *for* or *abstain* |
+| Timelock delay | 1 hour | Short for the demo; use 1–2 days in production |
+| Report bond / reward | 0.1 ETH / 10 reputation | Changeable by vote (`setParameters`) |
 
 ---
 
@@ -207,8 +358,9 @@ Dispatch cost by payload size: 32 B → 32,429 · 256 B → 37,933 · 1 KB → 6
 ```bash
 cd wp1-dao-collaboration
 npm install
-npm test             # 26 tests
-npm run demo         # the paper's 13 steps, end to end
+npm test             # 51 tests
+npm run demo         # the paper's 13 steps, end to end (D1.3)
+npm run dao-demo     # the DAO workspace scenario (D1.2) → results/dao.json
 npm run benchmark    # gas measurements → results/gas.json
 npm run coverage
 ```
@@ -312,7 +464,8 @@ Mirrors are **non-transferable**: access was granted to one specific team.
 - **Liveness:** relaying is permissionless, so anyone can deliver an attested message. Validators that go offline only delay delivery.
 - **Privacy:** only hashes and URIs cross the bridge. Zero-knowledge ownership proofs (paper §3.6.1) are planned in WP4.
 - **Two domains, one EVM:** tests and the demo simulate chains A and B as two gateways on one local network with different domain IDs. `lib/l3.js` takes ordinary ethers contracts, so the same code can relay between two real RPC endpoints.
-- **Not yet implemented:** validator staking and slashing, fees for relayers, and para-, side- and super-chain variants of the framework.
+- **DAO:** reputation is earned, so early members hold more voting power; the DAO can rebalance it by vote (`grantReputation`, `expelMember`). The L3 validator set is rotated by the validators themselves, not by the DAO, so a captured DAO cannot take over the bridge.
+- **Not yet implemented:** validator staking and slashing, fees for relayers, para-, side- and super-chain variants of the framework, and governance that spans several chains.
 
 > ⚠️ Research prototype. It has not been audited, so do not use it with real assets.
 
@@ -325,7 +478,7 @@ Mirrors are **non-transferable**: access was granted to one specific team.
 | **T1.1** Review blockchain, NFT and DAO protocols & standards | ✅ Published: the AEI 2025 review above (§2–3) |
 | **T1.3** Framework for integrating Web 3 technologies into digital twins | ✅ Generic L3 framework (paper §4) + this implementation |
 | **D1.3** Secure and accessible data-sharing platform | 🧪 Prototype: `L3Gateway` + `DigitalTwinDNFT` |
-| **D1.2** DAO platform for twin teams | 🔜 Next: governance of the validator set and shared twins |
+| **D1.2** DAO platform providing a virtual workspace for twin teams | 🧪 Prototype: `contracts/dao/` — reputation-weighted governance, timelock, projects, parallel tasks, experiments, reports |
 
 ---
 

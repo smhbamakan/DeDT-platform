@@ -30,7 +30,7 @@ flowchart TB
     end
 
     subgraph Chain["⛓️ Blockchain layer"]
-        WP1["<b>WP1 · L3 collaboration</b><br/>cross-chain gateway · dNFT · HTLC"]
+        WP1["<b>WP1 · DAO + L3 collaboration</b><br/>governance · workspace · cross-chain gateway"]
         WP3["<b>WP3 · IP-NFT</b><br/>provenance & fundraising"]
         WP4["<b>WP4 · Trust</b><br/>IBE · authentication · ZKP"]
     end
@@ -57,11 +57,11 @@ flowchart TB
 
 | Folder | Work package | Objective | Tech | Status |
 |---|---|---|---|---|
-| [`wp1-dao-collaboration/`](wp1-dao-collaboration/) | **WP1** · L3 collaboration across heterogeneous blockchains | O1, O2 | Solidity · Hardhat · Python | ✅ Prototype + tests + figures |
+| [`wp1-dao-collaboration/`](wp1-dao-collaboration/) | **WP1** · DAO workspace for twin teams (D1.2) + L3 collaboration across blockchains (D1.3) | O1, O2 | Solidity · Hardhat · Python | ✅ Prototype + tests + figures |
 | [`wp3-ip-nft-fundraising/`](wp3-ip-nft-fundraising/) | **WP3** · IP-NFTs & fundraising | O3 | Solidity · Hardhat | ✅ Prototype + tests |
-| [`wp2-big-data-flows/`](wp2-big-data-flows/) | **WP2** · Big data flows | O2 | Python | 🔜 Step 3 |
-| [`wp4-trust-auditing/`](wp4-trust-auditing/) | **WP4** · Trust & auditing | O4 | Python · Solidity | 🔜 Step 4 |
-| [`docs/`](docs/) | Documentation & tutorials | — | Markdown | 🔜 Step 5 |
+| [`wp2-big-data-flows/`](wp2-big-data-flows/) | **WP2** · Big data flows | O2 | Python | 🔜 Step 4 |
+| [`wp4-trust-auditing/`](wp4-trust-auditing/) | **WP4** · Trust & auditing | O4 | Python · Solidity | 🔜 Step 5 |
+| [`docs/`](docs/) | Documentation & tutorials | — | Markdown | 🔜 Step 6 |
 
 Each folder is self-contained, with its own README, install steps and tests.
 
@@ -71,10 +71,11 @@ Each folder is self-contained, with its own README, install steps and tests.
 timeline
     title Step-by-step build of the DeDT platform
     Step 1 : WP3 IP-NFT registry : NFT-backed crowdfunding : IP share tokens
-    Step 2 : WP1 L3 gateway (AEI 2025 paper) : dNFT sharing across chains : HTLC atomic swaps : DAO governance (next)
-    Step 3 : WP2 sensor stream simulator : edge aggregation : Merkle anchoring on-chain
-    Step 4 : WP4 identity-based encryption : self-judgment authentication : ZKP ownership proofs
-    Step 5 : Integration demo : tutorials & docs
+    Step 2 : WP1 L3 gateway (AEI 2025 paper) : dNFT sharing across chains : HTLC atomic swaps
+    Step 3 : WP1 DAO workspace (D1.2) : reputation voting and timelock : parallel tasks, experiments, reports
+    Step 4 : WP2 sensor stream simulator : edge aggregation : Merkle anchoring on-chain
+    Step 5 : WP4 identity-based encryption : self-judgment authentication : ZKP ownership proofs
+    Step 6 : Integration demo : tutorials & docs
 ```
 
 ---

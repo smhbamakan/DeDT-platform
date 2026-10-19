@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-10-19T11:11:22.090Z",
+  "proposals": [
+    {
+      "title": "Admit Carol, open the robot-arm project, fund two tasks",
+      "state": "Executed",
+      "for": 200,
+      "against": 0,
+      "abstain": 0,
+      "gas": {
+        "votes": [
+          83344,
+          66244,
+          66244
+        ],
+        "propose": 99539,
+        "queue": 181909,
+        "execute": 625196
+      }
+    },
+    {
+      "title": "Uphold report #0 and slash Bob by 20 reputation",
+      "state": "Executed",
+      "for": 215,
+      "against": 40,
+      "abstain": 0,
+      "gas": {
+        "votes": [
+          83344,
+          66244,
+          66244,
+          83300
+        ],
+        "propose": 76930,
+        "queue": 148457,
+        "execute": 267486
+      }
+    },
+    {
+      "title": "Connect the twin dNFT to chain 2002",
+      "state": "Executed",
+      "for": 150,
+      "against": 0,
+      "abstain": 0,
+      "gas": {
+        "votes": [
+          83344,
+          68593
+        ],
+        "propose": 78967,
+        "queue": 148254,
+        "execute": 116380
+      }
+    }
+  ],
+  "actions": {
+    "Propose": 99539,
+    "Cast vote": 71944,
+    "Queue (timelock)": 181909,
+    "Execute (4 actions)": 625196,
+    "Claim task": 58405,
+    "Submit result": 55508,
+    "Approve task (pays bounty)": 148586,
+    "Submit experiment": 150567,
+    "Endorse experiment": 84476,
+    "File report (bonded)": 170672
+  },
+  "reputation": [
+    {
+      "stage": "Founding",
+      "Lead": 100,
+      "Alice": 60,
+      "Bob": 40,
+      "Carol": 0
+    },
+    {
+      "stage": "After tasks",
+      "Lead": 100,
+      "Alice": 75,
+      "Bob": 40,
+      "Carol": 40
+    },
+    {
+      "stage": "After report",
+      "Lead": 100,
+      "Alice": 75,
+      "Bob": 20,
+      "Carol": 50
+    }
+  ]
+}
