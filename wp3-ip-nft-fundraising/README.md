@@ -28,8 +28,8 @@ Digital twin teams invest heavily in models, data and know-how, but:
 
 | Deliverable | Description | Status |
 |---|---|---|
-| D3.1 | Financial requirements of twin teams | 📝 Planned (report) |
-| D3.2 | NFT funding model implementation | ✅ Prototype in this folder |
+| D3.1 | Financial requirements of twin teams | ✅ Report v1.0 |
+| D3.2 | NFT funding model: Digital-Twin-Verified Financing (DTVF) | ✅ Contracts, tests and simulation in this folder; report v1.0 |
 | D3.3 | Pilot experiments on NFT-funded projects | 🧪 Demo script ready; pilot data to come |
 
 ---
@@ -67,6 +67,8 @@ flowchart LR
 | [`DigitalTwinIPNFT.sol`](contracts/DigitalTwinIPNFT.sol) | ERC-721, ERC-2981 | Registers twins, stores the birth certificate & provenance trail, royalties |
 | [`TwinFundraiser.sol`](contracts/TwinFundraiser.sol) | ERC-721 receiver | Locks the IP-NFT, collects contributions, pays out or refunds |
 | [`IPShareToken.sol`](contracts/IPShareToken.sol) | ERC-20 | Fungible shares of one IP-NFT, minted only by the fundraiser |
+| [`TwinVerifiedFinancing.sol`](contracts/TwinVerifiedFinancing.sol) | ERC-721 receiver, ERC-20 asset | **DTVF**: staged release against KPI milestones evidenced in the IP-NFT version trail, bonded challenges, stake-weighted disputes, refunds, income sharing |
+| [`QuadraticMatchingPool.sol`](contracts/QuadraticMatchingPool.sol) | ERC-20 asset | Quadratic matching round for open twin components |
 
 ---
 
