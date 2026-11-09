@@ -30,7 +30,7 @@ Digital twin teams invest heavily in models, data and know-how, but:
 |---|---|---|
 | D3.1 | Financial requirements of twin teams | ✅ Report v1.0 |
 | D3.2 | NFT funding model: Digital-Twin-Verified Financing (DTVF) | ✅ Contracts, tests and simulation in this folder; report v1.0 |
-| D3.3 | Pilot experiments on NFT-funded projects | 🧪 Demo script ready; pilot data to come |
+| D3.3 | Pilot experiments on NFT-funded projects | 🧪 Technical pilot done ([pilot/](pilot)); field pilot planned |
 
 ---
 

@@ -1,0 +1,59 @@
+{
+  "milestones": [
+    {
+      "kpi": "completeness",
+      "target": 9900,
+      "unit": "bps",
+      "label": "M1 data pipeline: completeness >= 99%"
+    },
+    {
+      "kpi": "anomaly_f1",
+      "target": 8000,
+      "unit": "bps",
+      "label": "M2 analytics: anomaly-detection F1 >= 0.80"
+    },
+    {
+      "kpi": "reduction",
+      "target": 100,
+      "unit": "x",
+      "label": "M3 scale-up: data reduction >= 100x"
+    }
+  ],
+  "runs": {
+    "published": {
+      "values": {
+        "completeness": 9955,
+        "anomaly_f1": 8618,
+        "reduction": 158
+      },
+      "chainHead": "0x7f1c71b90dcff0e38b93dc0b591ff23ab1df1f18e670f13301518cb3c7b9a80d",
+      "batches": 30,
+      "readings": 11379,
+      "evidence": {
+        "completeness": "0x9dd77c3d612051ebe03d5290f6667bfd74a096aa6c3228777191243d2392b573",
+        "anomaly_f1": "0x047d2bd1b21776b43a2248ad5359e0b9b9d0a1658205850d3e423f8ab6754490",
+        "reduction": "0x2d5a499e24bc47227fec7c9730ca7a22c51bcd8e5ada8826250de42e71826b8c"
+      }
+    },
+    "misconfigured": {
+      "values": {
+        "completeness": 9955,
+        "anomaly_f1": 7407,
+        "reduction": 158
+      },
+      "chainHead": "0x2755b945e288543fed421b3038272b2d7aafffb50a16f56bf5c9d7c93e342478",
+      "batches": 30,
+      "readings": 11379,
+      "evidence": {
+        "completeness": "0x24b05191ba90061df140ded78e1e02a0692212581a513c42e0c16667a69a1561",
+        "anomaly_f1": "0xecddb3f05bf4854bf23e3713904e4c3873740fbb438ef70ae2b68f2a213c7511",
+        "reduction": "0x914d32dab17076677a28b409695457350e78a949abb23b1ddc9bbb364a442f7c"
+      }
+    }
+  },
+  "kpiIds": {
+    "completeness": "0x736d00e2f6ca5551bd8829e53e3639626eabb0cd08fca742efd852606f0f0a1a",
+    "anomaly_f1": "0x432e8003c1b2c9e4012f61739630239bb518682d8574c1bd9e81ce8ac03f5053",
+    "reduction": "0x523fb0a976732b797d12b2569812eb05cefc8d577b144b53152fd844e16c655d"
+  }
+}

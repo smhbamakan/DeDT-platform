@@ -1,0 +1,250 @@
+{
+  "scenarios": [
+    {
+      "name": "S1 honest team, unchallenged milestones",
+      "outcome": "completed",
+      "phaseFinal": "Completed",
+      "backers": 24,
+      "raised": 100000,
+      "releasedToTeam": 100000,
+      "refundedToBackers": 0,
+      "income": 48000,
+      "backerIncome": 14399.999999999998,
+      "teamReceived": 145600,
+      "split": {
+        "lead": 72120,
+        "modeller": 46760,
+        "dataOwner": 26720
+      },
+      "watcher": 0,
+      "griefer": 0,
+      "dustUnits": 0,
+      "conserved": true,
+      "txs": 104,
+      "gas": {
+        "team": 2658331,
+        "backers": 5735273,
+        "anyone": 410695,
+        "licensee": 383856
+      },
+      "days": 439,
+      "timeline": [
+        {
+          "day": 10,
+          "released": 20000,
+          "event": "funding closed, advance released"
+        },
+        {
+          "day": 33,
+          "released": 50000,
+          "event": "M1 accepted"
+        },
+        {
+          "day": 56,
+          "released": 80000,
+          "event": "M2 accepted"
+        },
+        {
+          "day": 79,
+          "released": 100000,
+          "event": "M3 accepted"
+        }
+      ]
+    },
+    {
+      "name": "S2 false claim at M2, challenged by watcher",
+      "outcome": "cancelled: milestone 2 rejected",
+      "phaseFinal": "Cancelled",
+      "backers": 24,
+      "raised": 100000,
+      "releasedToTeam": 50000,
+      "refundedToBackers": 50000,
+      "income": 0,
+      "backerIncome": 0,
+      "teamReceived": 54500,
+      "split": {
+        "lead": 27000,
+        "modeller": 17500,
+        "dataOwner": 10000
+      },
+      "watcher": 9000,
+      "griefer": 0,
+      "dustUnits": 0,
+      "conserved": true,
+      "txs": 88,
+      "gas": {
+        "team": 2353586,
+        "backers": 5627294,
+        "anyone": 355584,
+        "watcher": 130779
+      },
+      "days": 58,
+      "timeline": [
+        {
+          "day": 10,
+          "released": 20000,
+          "event": "funding closed, advance released"
+        },
+        {
+          "day": 33,
+          "released": 50000,
+          "event": "M1 accepted"
+        },
+        {
+          "day": 58,
+          "released": 50000,
+          "event": "M2 disputed, rejected"
+        }
+      ]
+    },
+    {
+      "name": "S3 frivolous challenge of a true claim at M2",
+      "outcome": "completed",
+      "phaseFinal": "Completed",
+      "backers": 24,
+      "raised": 100000,
+      "releasedToTeam": 100000,
+      "refundedToBackers": 0,
+      "income": 48000,
+      "backerIncome": 14400,
+      "teamReceived": 150100,
+      "split": {
+        "lead": 76620,
+        "modeller": 46760,
+        "dataOwner": 26720
+      },
+      "watcher": 0,
+      "griefer": 0,
+      "dustUnits": 0,
+      "conserved": true,
+      "txs": 123,
+      "gas": {
+        "team": 2658343,
+        "backers": 6951205,
+        "anyone": 415664,
+        "griefer": 90772,
+        "licensee": 383856
+      },
+      "days": 441,
+      "timeline": [
+        {
+          "day": 10,
+          "released": 20000,
+          "event": "funding closed, advance released"
+        },
+        {
+          "day": 33,
+          "released": 50000,
+          "event": "M1 accepted"
+        },
+        {
+          "day": 58,
+          "released": 80000,
+          "event": "M2 disputed, accepted"
+        },
+        {
+          "day": 81,
+          "released": 100000,
+          "event": "M3 accepted"
+        }
+      ]
+    },
+    {
+      "name": "S4 M3 deadline missed",
+      "outcome": "cancelled: milestone 3 overdue",
+      "phaseFinal": "Cancelled",
+      "backers": 24,
+      "raised": 100000,
+      "releasedToTeam": 80000,
+      "refundedToBackers": 20000,
+      "income": 0,
+      "backerIncome": 0,
+      "teamReceived": 89000,
+      "split": {
+        "lead": 45000,
+        "modeller": 28000,
+        "dataOwner": 16000
+      },
+      "watcher": 0,
+      "griefer": 0,
+      "dustUnits": 0,
+      "conserved": true,
+      "txs": 75,
+      "gas": {
+        "team": 2351197,
+        "backers": 4829040,
+        "anyone": 321319,
+        "watcher": 82197
+      },
+      "days": 106,
+      "timeline": [
+        {
+          "day": 10,
+          "released": 20000,
+          "event": "funding closed, advance released"
+        },
+        {
+          "day": 33,
+          "released": 50000,
+          "event": "M1 accepted"
+        },
+        {
+          "day": 56,
+          "released": 80000,
+          "event": "M2 accepted"
+        },
+        {
+          "day": 106,
+          "released": 80000,
+          "event": "cancelled: milestone 3 overdue"
+        }
+      ]
+    }
+  ],
+  "qf": {
+    "pool": 5000,
+    "totalRawMatch": 8999.800528,
+    "components": [
+      {
+        "contributions": 600,
+        "contributors": 12,
+        "rawMatch": 6600.000000000001,
+        "rawMatchOnChain": 6599.861904,
+        "matched": 3666.671213,
+        "received": 4266.671213
+      },
+      {
+        "contributions": 800,
+        "contributors": 4,
+        "rawMatch": 2400.0000000000005,
+        "rawMatchOnChain": 2399.938624,
+        "matched": 1333.328786,
+        "received": 2133.328786
+      },
+      {
+        "contributions": 800,
+        "contributors": 1,
+        "rawMatch": 1.1368683772161603e-13,
+        "rawMatchOnChain": 0,
+        "matched": 0,
+        "received": 800
+      }
+    ]
+  },
+  "evidence": {
+    "runs": {
+      "published": {
+        "completeness": 9955,
+        "anomaly_f1": 8618,
+        "reduction": 158
+      },
+      "misconfigured": {
+        "completeness": 9955,
+        "anomaly_f1": 7407,
+        "reduction": 158
+      }
+    },
+    "batches": 30,
+    "readings": 11379
+  }
+}
