@@ -1,0 +1,116 @@
+{
+  "name": "Zero-Knowledge-Verified Provenance, Ownership and Access Control for Digital Twins Bound to Non-Fungible Tokens",
+  "description": "IP-NFT recording a defensive publication (technical disclosure) by S. M. Hosseini Bamakan and A. Zareravasan, Masaryk University. The token binds the published document's DOI, its SHA-256 digest and its licence. The disclosed subject-matter is placed in the public domain as prior art as of the publication date.",
+  "image": "ipfs://bafkreid6bdtzbymi3b26iidhtit6hfgt2uhw4l4reigaojxvoc3th7dnwy",
+  "external_url": "https://doi.org/10.5281/zenodo.24075040",
+  "attributes": [
+    {
+      "trait_type": "Asset type",
+      "value": "Defensive publication"
+    },
+    {
+      "trait_type": "DOI",
+      "value": "10.5281/zenodo.24075040"
+    },
+    {
+      "trait_type": "Publication date",
+      "value": "2026-11-09"
+    },
+    {
+      "trait_type": "Licence",
+      "value": "CC BY 4.0"
+    },
+    {
+      "trait_type": "Rights holder",
+      "value": "Masaryk University"
+    },
+    {
+      "trait_type": "Field",
+      "value": "Distributed computing / applied cryptography / digital twins"
+    },
+    {
+      "trait_type": "Version",
+      "value": "1.1"
+    }
+  ],
+  "properties": {
+    "schema_version": "1.0",
+    "publication": {
+      "title": "Zero-Knowledge-Verified Provenance, Ownership and Access Control for Digital Twins Bound to Non-Fungible Tokens",
+      "type": "Defensive publication (technical disclosure)",
+      "doi": "10.5281/zenodo.24075040",
+      "repository": "Zenodo",
+      "also_published_at": "Technical Disclosure Commons (submitted 2026-11-09; link to be added on publication)",
+      "publication_date": "2026-11-09",
+      "version": "1.1",
+      "citation": "S. M. Hosseini Bamakan and A. Zareravasan, \"Zero-Knowledge-Verified Provenance, Ownership and Access Control for Digital Twins Bound to Non-Fungible Tokens,\" Defensive Publication, Masaryk University, 2026. DOI: 10.5281/zenodo.24075040.",
+      "version_doi": "10.5281/zenodo.24076114",
+      "previous_versions": [
+        {
+          "version": "1.0",
+          "doi": "10.5281/zenodo.24075041"
+        }
+      ]
+    },
+    "authors": [
+      {
+        "name": "Seyed Mojtaba Hosseini Bamakan",
+        "orcid": "0000-0001-5862-2222",
+        "affiliation": "Department of Business Management, Faculty of Economics and Administration, Masaryk University, Brno, Czech Republic"
+      },
+      {
+        "name": "Ahad Zareravasan",
+        "affiliation": "Department of Business Management, Faculty of Economics and Administration, Masaryk University, Brno, Czech Republic"
+      }
+    ],
+    "acknowledgments": [
+      {
+        "name": "Iveta Šmajerová",
+        "role": "project administration",
+        "affiliation": "Project Office, Masaryk University"
+      }
+    ],
+    "rights_holder": {
+      "name": "Masaryk University",
+      "address": "Žerotínovo nám. 617/9, 601 77 Brno, Czech Republic"
+    },
+    "document_commitment": {
+      "algorithm": "SHA-256",
+      "digest": "0xe8e183cec2ff1cae419d5608227c20f5242c3026ce26a867563eda4f45afa964",
+      "uri": "ipfs://bafybeib3y75yabu5jmt75fn2qlsd7ehyhuhlzikbr5kgczy4bfub4kcd6y",
+      "document": "Defensive_Publication_ZK_DT_IPNFT_v1.1.pdf",
+      "md5": "89af50d54b515a84d69f1e9839cfb34d"
+    },
+    "license": {
+      "spdx": "CC-BY-4.0",
+      "uri": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "funding": {
+      "project": "MSCAfellow7_MUNI",
+      "registration_number": "CZ.02.01.01/00/22_010/0008854"
+    },
+    "timestamp_proofs": {
+      "opentimestamps": "ipfs://bafkreicl7njcrwrb6xxmngpxdf4v5ayooo3tcjhhxoren2voyvy3zmhl6e",
+      "note": "OpenTimestamps proof of the SHA-256 digest, submitted 2026-11-09"
+    },
+    "related_identifiers": [
+      {
+        "relation": "IsVersionOf",
+        "identifier": "https://doi.org/10.5281/zenodo.24075040"
+      },
+      {
+        "relation": "IsIdenticalTo",
+        "identifier": "https://doi.org/10.5281/zenodo.24076114"
+      },
+      {
+        "relation": "IsSupplementedBy",
+        "identifier": "https://github.com/smhbamakan/DeDT-platform"
+      },
+      {
+        "relation": "IsDocumentedBy",
+        "identifier": "https://smhbamakan.github.io/DeDT/"
+      }
+    ]
+  },
+  "animation_url": "ipfs://bafybeib3y75yabu5jmt75fn2qlsd7ehyhuhlzikbr5kgczy4bfub4kcd6y"
+}

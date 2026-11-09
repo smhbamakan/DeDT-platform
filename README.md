@@ -97,6 +97,8 @@ timeline
 
 ## 📚 Publications
 
+> Hosseini Bamakan, S. M., & Zareravasan, A. (2026). *Zero-Knowledge-Verified Provenance, Ownership and Access Control for Digital Twins Bound to Non-Fungible Tokens* (Version 1.1) [Defensive publication]. Zenodo. https://doi.org/10.5281/zenodo.24075040 · registered as an [IP-NFT on Ethereum](https://etherscan.io/nft/0x0bDB2c4a4ECcE150bBB930833D8ce17d22d81bab/1) ([details](wp3-ip-nft-fundraising/registry/))
+
 > Banaeian Far, S., & Hosseini Bamakan, S. M. (2025). *Analyzing potential collaboration methods for digital twin teams developed on heterogeneous blockchains without a central authority.* **Advanced Engineering Informatics**, 68, 103616. https://doi.org/10.1016/j.aei.2025.103616
 
 <details>

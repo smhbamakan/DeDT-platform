@@ -224,6 +224,7 @@ npm run deploy:sepolia
 | T3.3 · NFT-powered funding model | IP-NFT escrow + `IPShareToken` |
 | T3.4 · Pilot experiments | `scripts/demo.js`, test suite (to be extended with pilot data) |
 | **D3.2** · NFT-funding model implementation | this folder |
+| Registered output (OP3.1) | [`registry/`](registry/): IP-NFT token #1 on Ethereum mainnet |
 
 ---
 
