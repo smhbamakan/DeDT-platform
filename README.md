@@ -59,10 +59,11 @@ flowchart TB
 | Folder | Work package | Objective | Tech | Status |
 |---|---|---|---|---|
 | [`wp1-dao-collaboration/`](wp1-dao-collaboration/) | **WP1** · DAO workspace for twin teams (D1.2) + L3 collaboration across blockchains (D1.3) | O1, O2 | Solidity · Hardhat · Python | ✅ Prototype + tests + figures |
-| [`wp3-ip-nft-fundraising/`](wp3-ip-nft-fundraising/) | **WP3** · IP-NFTs & fundraising | O3 | Solidity · Hardhat | ✅ Prototype + tests |
+| [`wp3-ip-nft-fundraising/`](wp3-ip-nft-fundraising/) | **WP3** · IP-NFTs and Digital-Twin-Verified Financing (DTVF): staged, KPI-verified funding, quadratic matching, pilot | O3 | Solidity · Hardhat · Python | ✅ Prototype + tests + simulation + pilot |
 | [`wp2-big-data-flows/`](wp2-big-data-flows/) | **WP2** · Big data flows: edge processing and on-chain integrity | O2 | Python · Solidity | ✅ Prototype + tests + experiments |
 | [`wp4-trust-auditing/`](wp4-trust-auditing/) | **WP4** · Trust & auditing: identity-based encryption with distributed key servers, self-judging data authentication, zero-knowledge birth-certificate proofs | O4 | Python · Solidity | ✅ Prototype + tests + benchmarks |
-| [`docs/`](docs/) | Documentation & tutorials | — | Markdown | 🔜 Step 6 |
+| [`integration/`](integration/) | **Integration demo**: one twin through WP2 → WP4 → WP1 → WP3, with an independent audit of the evidence chain | O1–O4 | Python · Hardhat | ✅ Step 6 |
+| [`docs/`](docs/) | Getting started, architecture, tutorials, glossary | — | Markdown | ✅ Step 6 |
 
 Each folder is self-contained, with its own README, install steps and tests.
 
