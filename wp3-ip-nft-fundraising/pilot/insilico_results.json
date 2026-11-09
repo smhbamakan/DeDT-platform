@@ -1,0 +1,619 @@
+{
+ "params": {
+  "n_per_cond": 64,
+  "pool": 16,
+  "claims": 6,
+  "false_claims": 2,
+  "alpha_mu": 1.0,
+  "alpha_sd": 1.0,
+  "gamma": 0.25,
+  "cost_min": {
+   "vote": 12.0,
+   "dtvf": 3.0
+  },
+  "cost_sd": 0.4,
+  "detect": {
+   "vote": 0.7,
+   "dtvf": 0.97
+  },
+  "false_alarm": {
+   "vote": 0.1,
+   "dtvf": 0.02
+  },
+  "vote_if_unchecked": 0.5,
+  "approve_if_unchecked": 0.85,
+  "challenge_willing": 0.8,
+  "quorum": 0.2,
+  "windows": {
+   "challenge": 3,
+   "vote": 5
+  }
+ },
+ "main": {
+  "vote": {
+   "q": 0.0,
+   "eps": 0.0,
+   "nu": 0.18489583333333334,
+   "turnout": 0.5520833333333334,
+   "days": 5.0,
+   "minutes": 11.076687124137212,
+   "indiv_correct_false": 0.1796875
+  },
+  "dtvf": {
+   "q": 0.75,
+   "eps": 0.0,
+   "nu": 0.5130208333333334,
+   "turnout": 0.7625,
+   "days": 5.083333333333333,
+   "minutes": 9.329785288415213,
+   "indiv_correct_false": 0.484375
+  }
+ },
+ "gee_correct_false": {
+  "OR": 4.288537549407115,
+  "lo": 2.3004141825722884,
+  "hi": 7.994888247519682,
+  "p": 4.615241166324748e-06
+ },
+ "gee_checked": {
+  "OR": 4.644196731189272,
+  "lo": 3.2040188511242413,
+  "hi": 6.731721715813576,
+  "p": 5.143571992439557e-16
+ },
+ "replications": {
+  "vote_q": [
+   0.0,
+   0.08,
+   0.25312499999999716
+  ],
+  "vote_eps": [
+   0.0,
+   0.00225,
+   0.0625
+  ],
+  "vote_nu": [
+   0.1275390625,
+   0.17174739583333334,
+   0.21875
+  ],
+  "vote_turnout": [
+   0.5338541666666666,
+   0.5866380208333333,
+   0.6354166666666666
+  ],
+  "vote_days": [
+   5.0,
+   5.0,
+   5.0
+  ],
+  "vote_minutes": [
+   7.1304734621872194,
+   10.011195935878623,
+   13.078513261729366
+  ],
+  "vote_indiv_correct_false": [
+   0.1171875,
+   0.18171875,
+   0.25
+  ],
+  "dtvf_q": [
+   0.75,
+   0.936125,
+   1.0
+  ],
+  "dtvf_eps": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "dtvf_nu": [
+   0.4713541666666667,
+   0.5378046875,
+   0.6016276041666666
+  ],
+  "dtvf_turnout": [
+   0.7013888888888888,
+   0.771286032630564,
+   0.8393105158730159
+  ],
+  "dtvf_days": [
+   4.666666666666667,
+   5.111875,
+   5.708333333333333
+  ],
+  "dtvf_minutes": [
+   8.61984635352638,
+   9.925354444439524,
+   11.275347850071867
+  ],
+  "dtvf_indiv_correct_false": [
+   0.4609375,
+   0.5553125,
+   0.640625
+  ]
+ },
+ "power": 1.0,
+ "claims": [
+  {
+   "cond": "vote",
+   "pool": "vote0",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5625,
+   "days": 5,
+   "checkers": 2
+  },
+  {
+   "cond": "vote",
+   "pool": "vote0",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5,
+   "days": 5,
+   "checkers": 1
+  },
+  {
+   "cond": "vote",
+   "pool": "vote0",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.6875,
+   "days": 5,
+   "checkers": 4
+  },
+  {
+   "cond": "vote",
+   "pool": "vote0",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5,
+   "days": 5,
+   "checkers": 6
+  },
+  {
+   "cond": "vote",
+   "pool": "vote0",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.8125,
+   "days": 5,
+   "checkers": 5
+  },
+  {
+   "cond": "vote",
+   "pool": "vote0",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.6875,
+   "days": 5,
+   "checkers": 1
+  },
+  {
+   "cond": "vote",
+   "pool": "vote1",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5,
+   "days": 5,
+   "checkers": 2
+  },
+  {
+   "cond": "vote",
+   "pool": "vote1",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5,
+   "days": 5,
+   "checkers": 5
+  },
+  {
+   "cond": "vote",
+   "pool": "vote1",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5625,
+   "days": 5,
+   "checkers": 2
+  },
+  {
+   "cond": "vote",
+   "pool": "vote1",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5625,
+   "days": 5,
+   "checkers": 3
+  },
+  {
+   "cond": "vote",
+   "pool": "vote1",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5,
+   "days": 5,
+   "checkers": 3
+  },
+  {
+   "cond": "vote",
+   "pool": "vote1",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.375,
+   "days": 5,
+   "checkers": 4
+  },
+  {
+   "cond": "vote",
+   "pool": "vote2",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5625,
+   "days": 5,
+   "checkers": 2
+  },
+  {
+   "cond": "vote",
+   "pool": "vote2",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.4375,
+   "days": 5,
+   "checkers": 2
+  },
+  {
+   "cond": "vote",
+   "pool": "vote2",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.4375,
+   "days": 5,
+   "checkers": 4
+  },
+  {
+   "cond": "vote",
+   "pool": "vote2",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5625,
+   "days": 5,
+   "checkers": 5
+  },
+  {
+   "cond": "vote",
+   "pool": "vote2",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.4375,
+   "days": 5,
+   "checkers": 2
+  },
+  {
+   "cond": "vote",
+   "pool": "vote2",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5625,
+   "days": 5,
+   "checkers": 1
+  },
+  {
+   "cond": "vote",
+   "pool": "vote3",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.375,
+   "days": 5,
+   "checkers": 2
+  },
+  {
+   "cond": "vote",
+   "pool": "vote3",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.75,
+   "days": 5,
+   "checkers": 2
+  },
+  {
+   "cond": "vote",
+   "pool": "vote3",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.6875,
+   "days": 5,
+   "checkers": 3
+  },
+  {
+   "cond": "vote",
+   "pool": "vote3",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.4375,
+   "days": 5,
+   "checkers": 4
+  },
+  {
+   "cond": "vote",
+   "pool": "vote3",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.6875,
+   "days": 5,
+   "checkers": 6
+  },
+  {
+   "cond": "vote",
+   "pool": "vote3",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.5625,
+   "days": 5,
+   "checkers": 0
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf0",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 8
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf0",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.625,
+   "days": 8,
+   "checkers": 4
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf0",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 7
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf0",
+   "true": false,
+   "rejected": true,
+   "challenged": true,
+   "turnout": 0.9375,
+   "days": 8,
+   "checkers": 9
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf0",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 9
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf0",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 7
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf1",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 9
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf1",
+   "true": false,
+   "rejected": true,
+   "challenged": true,
+   "turnout": 0.8125,
+   "days": 8,
+   "checkers": 11
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf1",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.75,
+   "days": 8,
+   "checkers": 9
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf1",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 10
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf1",
+   "true": false,
+   "rejected": true,
+   "challenged": true,
+   "turnout": 0.8125,
+   "days": 8,
+   "checkers": 9
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf1",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 10
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf2",
+   "true": false,
+   "rejected": true,
+   "challenged": true,
+   "turnout": 0.625,
+   "days": 8,
+   "checkers": 6
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf2",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 9
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf2",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 9
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf2",
+   "true": false,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.8125,
+   "days": 8,
+   "checkers": 6
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf2",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 12
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf2",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 10
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf3",
+   "true": false,
+   "rejected": true,
+   "challenged": true,
+   "turnout": 0.8125,
+   "days": 8,
+   "checkers": 9
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf3",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 7
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf3",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 9
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf3",
+   "true": false,
+   "rejected": true,
+   "challenged": true,
+   "turnout": 0.8125,
+   "days": 8,
+   "checkers": 6
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf3",
+   "true": true,
+   "rejected": false,
+   "challenged": true,
+   "turnout": 0.625,
+   "days": 8,
+   "checkers": 6
+  },
+  {
+   "cond": "dtvf",
+   "pool": "dtvf3",
+   "true": true,
+   "rejected": false,
+   "challenged": false,
+   "turnout": 0.0,
+   "days": 3,
+   "checkers": 6
+  }
+ ]
+}
